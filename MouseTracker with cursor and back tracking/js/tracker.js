@@ -61,7 +61,7 @@ $(document).ready(function () {
         }
         bugout.log("99,0,0,0,0");
         // console.log("----------------downtracking started----------------");
-        $(elementToBeTracked).css('cursor', 'auto');        // change the cursor to default
+        // $(elementToBeTracked).css('cursor', 'auto');        // change the cursor to default
         $("#left").unbind("mouseenter");                // unbind the mouseenter event from the stimuli, which is binded on line 57
         $("#right").unbind("mouseenter");               // unbind the mousemove to stop mouse tracking
         $(elementToBeTracked).unbind("mousemove");          // stop the mouse coordinate tracking
@@ -93,6 +93,7 @@ $(document).ready(function () {
     function startBackTracking(beginBlock2) {
         $(elementToBeTracked).mousemove(trackMouseMovement);        // enable the mouse coordinate tracking
         $('#startTrial').bind('mousemove', function () {
+            $(elementToBeTracked).css('cursor', 'auto');        // change the cursor to default
             $(this).unbind("mousemove");                // remove the click functionality from the start button, until one of the stimuli is selected
             $(elementToBeTracked).unbind("mousemove");          // stop the mouse coordinate tracking
 
