@@ -1,8 +1,8 @@
 /*.dot {*/
-    /*width: 2px;*/
-    /*height: 2px;*/
-    /*background-color: black;*/
-    /*position: absolute;*/
+/*width: 2px;*/
+/*height: 2px;*/
+/*background-color: black;*/
+/*position: absolute;*/
 /*}*/
 
 .success.button {
@@ -16,4 +16,10 @@
 
 #toBeTracked .nimstim {
     min-height: 270px;
+}
+
+#startTrial.white {
+    background-color: white !important;
+    color: black !important;
+    border: 1px solid black;
 }

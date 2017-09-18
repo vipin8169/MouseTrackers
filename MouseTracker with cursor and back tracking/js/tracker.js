@@ -42,7 +42,7 @@ var elementToBeTracked = $('#toBeTracked');
 var panelOffsetHeight = $('#toBeTracked .panel').height();
 var panelOffsetLeft = $('#toBeTracked .panel').offset().left;
 var panelOffsetTop = $('#toBeTracked .panel').offset().top;
-
+var timeInterval = [0, 500, 1000, 1500];
 var blockTrialsNum = blocOneTrials.length;
 $(document).ready(function () {
 
@@ -65,12 +65,20 @@ $(document).ready(function () {
         $("#left").unbind("mouseenter");                // unbind the mouseenter event from the stimuli, which is binded on line 57
         $("#right").unbind("mouseenter");               // unbind the mousemove to stop mouse tracking
         $(elementToBeTracked).unbind("mousemove");          // stop the mouse coordinate tracking
-        startBackTracking(beginBlock2);
-        $('#startTrial').text("Start Trial!");          // change the button text
-        if (timesToRepeat > 0) {
-            setTimeout(function () {
+
+        var randInterval = Math.floor(Math.random() * timeInterval.length);    // generate a random integer governed by the length of the array
+        $('#startTrial').text("Wait!").addClass('white');          // change the button text
+        setTimeout(function () {
+            startBackTracking(beginBlock2);
+            if (timesToRepeat > 0) {
                 enableTrialButton();                    // enable the trial button again after 500ms
-            }, 500);
+            }
+        }, timeInterval[randInterval]);
+
+        if (timesToRepeat > 0) {
+            // setTimeout(function () {
+            //     enableTrialButton();                    // enable the trial button again after 500ms
+            // }, 500);
         }
         else {
             if (beginBlock2) {                          // timesToRepeat = 0 and the currTrial[3] == 1 defines the end of block 1
@@ -92,17 +100,17 @@ $(document).ready(function () {
 
     function startBackTracking(beginBlock2) {
         $(elementToBeTracked).mousemove(trackMouseMovement);        // enable the mouse coordinate tracking
+        $('#startTrial').text("Come back!").removeClass('white');
         $('#startTrial').bind('mousemove', function () {
+            $('#startTrial').text("Start Trial!").removeClass('white');
             $(elementToBeTracked).css('cursor', 'auto');        // change the cursor to default
             $(this).unbind("mousemove");                // remove the click functionality from the start button, until one of the stimuli is selected
             $(elementToBeTracked).unbind("mousemove");          // stop the mouse coordinate tracking
-
             if (timesToRepeat == blockTrialsNum / 2) {
                 bugout.downloadLog();
                 bugout = new debugout();
                 bugout.autoTrim = false;
             }
-
             if (timesToRepeat <= 0) {
                 if (beginBlock2) {
                     $('#welcomeMessage').removeClass('hide');
@@ -120,7 +128,7 @@ $(document).ready(function () {
                 }
                 else {
                     bugout.downloadLog();
-                    $('#startTrial').text('End of Trials!');    // say that the trials are ended
+                    $('#startTrial').text('End of Trials!').removeClass('white');    // say that the trials are ended
                 }
             }
         });
@@ -169,6 +177,7 @@ $(document).ready(function () {
         $('#right').bind('mouseenter', function () {
             stopTracking(event, blockOneGoing)
         });            // stop the tracking once one of the stimuli is selected
+        // $('#startTrial').text("Start Trial!").removeClass('white');
     };
 
     var enableTrialButton = function () {

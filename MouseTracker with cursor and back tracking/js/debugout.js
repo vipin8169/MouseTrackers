@@ -10,7 +10,7 @@ function debugout() {
 	var self = this;
 
 	// OPTIONS
-	self.realTimeLoggingOn = true; // log in real time (forwards to console.log)
+	self.realTimeLoggingOn = false; // log in real time (forwards to console.log)
 	self.useTimestamps = false; // insert a timestamp in front of each log
 	self.useLocalStorage = false; // store the output using window.localStorage() and continuously add to the same log each session
 	self.recordLogs = true; // set to false after you're done debugging to avoid the log eating up memory
