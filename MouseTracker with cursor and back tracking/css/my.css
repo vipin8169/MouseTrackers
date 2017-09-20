@@ -19,7 +19,5 @@
 }
 
 #startTrial.white {
-    background-color: white !important;
-    color: black !important;
-    border: 1px solid black;
+    background-color: red !important;
 }
