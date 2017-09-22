@@ -42,7 +42,7 @@ var elementToBeTracked = $('#toBeTracked');
 var panelOffsetHeight = $('#toBeTracked .panel').height();
 var panelOffsetLeft = $('#toBeTracked .panel').offset().left;
 var panelOffsetTop = $('#toBeTracked .panel').offset().top;
-var timeInterval = [0, 500, 1000, 1500];
+var timeInterval = [1000, 1250, 1500, 1750];
 var blockTrialsNum = blocOneTrials.length;
 $(document).ready(function () {
 
