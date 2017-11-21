@@ -21,3 +21,38 @@
 #startTrial.white {
     background-color: red !important;
 }
+
+#vertical .panel {
+    height: 90vh;
+}
+
+#vertical .panel > .row {
+    height: 100%;
+}
+
+#vertical .panel > .row .columns.targets {
+    display: block;
+    height: 100%;
+}
+
+#vertical .panel .row {
+    /*display: table;*/
+    width: 100%;
+}
+
+#vertical .panel > .row .row {
+    height: 50%;
+}
+
+#vertical .panel .row .columns {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#horizontal .row .columns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
