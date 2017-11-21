@@ -11,7 +11,7 @@ var blocOneTrials = [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 2, 1], [1,
     [2, 3, 1, 1], [2, 3, 1, 1], [2, 3, 2, 1], [2, 3, 2, 1], [2, 3, 2, 1], [3, 1, 1, 1], [3, 1, 1, 1], [3, 1, 1, 1],
     [3, 1, 2, 1], [3, 1, 2, 1], [3, 1, 2, 1], [3, 2, 1, 1], [3, 2, 1, 1], [3, 2, 1, 1], [3, 2, 2, 1], [3, 2, 2, 1],
     [3, 2, 2, 1], [3, 3, 1, 1], [3, 3, 1, 1], [3, 3, 1, 1], [3, 3, 2, 1], [3, 3, 2, 1], [3, 3, 2, 1]];
-blocOneTrials = [[1, 3, 2, 1], [2, 1, 1, 1]];
+blocOneTrials = [[1, 2, 2, 1], [2, 1, 1, 1], [1, 3, 2, 1], [3, 1, 1, 1]];
 var blocTwoTrials = [[1, 1, 1, 2], [1, 1, 1, 2], [1, 1, 1, 2], [1, 1, 2, 2], [1, 1, 2, 2], [1, 1, 2, 2], [1, 2, 1, 2],
     [1, 2, 1, 2], [1, 2, 1, 2], [1, 2, 2, 2], [1, 2, 2, 2], [1, 2, 2, 2], [1, 3, 1, 2], [1, 3, 1, 2], [1, 3, 1, 2],
     [1, 3, 2, 2], [1, 3, 2, 2], [1, 3, 2, 2], [2, 1, 1, 2], [2, 1, 1, 2], [2, 1, 1, 2], [2, 1, 2, 2], [2, 1, 2, 2],
@@ -22,7 +22,8 @@ var blocTwoTrials = [[1, 1, 1, 2], [1, 1, 1, 2], [1, 1, 1, 2], [1, 1, 2, 2], [1,
 var activeTrial = [];
 var bugout = new debugout();
 bugout.autoTrim = false;
-blocTwoTrials = [[1, 3, 2, 2], [2, 1, 1, 2]];
+bugout.realTimeLoggingOn = true;
+blocTwoTrials = [[1, 3, 2, 2], [2, 3, 1, 2], [1, 2, 2, 2], [3, 3, 1, 2]];
 var completeList;
 var redImgPrefix = 'img/red/'; // location of red dots
 var blackImgPrefix = 'img/black/'; // location of black dots
@@ -42,17 +43,16 @@ $(document).ready(function () {
     function stopTracking(event, beginOtherBlock) {
         bugout.log("88,0,0,0,0");
         // console.log("----------------uptracking finished----------------");;
-        if (event.target.id == 'left' || event.target.id == 'up') {
-            // console.log("Stimuli= " + activeTrial + ',1');                               // log what are we showing to the user
-            bugout.log(activeTrial + ',1');                               // log what are we showing to the user
-        }
-        else {
-            bugout.log(activeTrial + ',2');                               // log what are we showing to the user
-            // console.log("Stimuli= " + activeTrial + ',2');                               // log what are we showing to the user
-        }
+        // if (event.target.id == 'left' || event.target.id == 'up') {
+        //     // console.log("Stimuli= " + activeTrial + ',1');                               // log what are we showing to the user
+        //     bugout.log(activeTrial + ',1');                               // log what are we showing to the user
+        // }
+        // else {
+        //     bugout.log(activeTrial + ',2');                               // log what are we showing to the user
+        //     // console.log("Stimuli= " + activeTrial + ',2');                               // log what are we showing to the user
+        // }
         bugout.log("99,0,0,0,0");
         // console.log("----------------downtracking started----------------");
-        // $(elementToBeTracked).css('cursor', 'auto');        // change the cursor to default
         $("#left").unbind("mouseenter");                // unbind the mouseenter event from the stimuli, which is binded on line 57
         $("#right").unbind("mouseenter");               // unbind the mousemove to stop mouse tracking
         $("#up").unbind("mouseenter");               // unbind the mousemove to stop mouse tracking
@@ -62,7 +62,7 @@ $(document).ready(function () {
         // var randInterval = Math.floor(Math.random() * timeInterval.length);    // generate a random integer governed by the length of the array
         // $('#startTrial').text("Wait!").addClass('white');          // change the button text
         // setTimeout(function () {
-            startBackTracking(beginOtherBlock);
+        startBackTracking(beginOtherBlock);
 
         // }, timeInterval[randInterval]);
 
@@ -98,45 +98,56 @@ $(document).ready(function () {
             $(this).unbind("mousemove");                // remove the click functionality from the start button, until one of the stimuli is selected
             $(elementToBeTracked).unbind("mousemove");          // stop the mouse coordinate tracking
             // if (timesToRepeat > 0) {
-                enableTrialButton();                    // enable the trial button again after 500ms
+            enableTrialButton();                    // enable the trial button again after 500ms
             // }
             if (timesToRepeat == blockTrialsNum / 2) {
                 bugout.downloadLog();
                 bugout = new debugout();
+                bugout.realTimeLoggingOn = true;
                 bugout.autoTrim = false;
             }
             if (timesToRepeat <= 0) {
                 // if (beginOtherBlock) {
-                    $('#welcomeMessage').removeClass('hide');
-                    $(elementToBeTracked).addClass('hide');
-                    $('#purpose').addClass('hide');
-                    $('#instructions').html("You just finished block one! Now, take as much rest as you want. In next experiment, your task is to move the cursor to the image of a MALE face if the cursor is a FLOWER and move the cursor to the image of a FEMALE face if the cursor is a SPIDER. You may start when you are ready.");
-                    // enableTrialButton();
-                    if(currentBlock==1){
-                        completeList = Array.from(blocTwoTrials);
-                        timesToRepeat = blocTwoTrials.length;
-                        $("#horizontal").addClass("hide");
-                        $("#vertical").removeClass("hide");
-                    }
-                    else{
-                        completeList = Array.from(blocOneTrials);
-                        timesToRepeat = blocOneTrials.length;
-                        $("#horizontal").removeClass("hide");
-                        $("#vertical").addClass("hide");
-                    }
-
-                    $('.nimstim img').attr('src', 'img/pic1.png');
-                    bugout.downloadLog();
-                    bugout = new debugout();
-                    bugout.autoTrim = false;
+                $('#welcomeMessage').removeClass('hide');
+                $(elementToBeTracked).addClass('hide');
+                $('#purpose').addClass('hide');
+                $('#instructions').html("You just finished block one! Now, take as much rest as you want. In next experiment, your task is to move the cursor to the image of a MALE face if the cursor is a FLOWER and move the cursor to the image of a FEMALE face if the cursor is a SPIDER. You may start when you are ready.");
+                // enableTrialButton();
+                if (currentBlock == 1) {
+                    completeList = Array.from(blocTwoTrials);
+                    timesToRepeat = blocTwoTrials.length;
+                    $("#horizontal").addClass("hide");
+                    $("#vertical").removeClass("hide");
                     blockTrialsNum = blocTwoTrials.length;
+                }
+                else {
+                    completeList = Array.from(blocOneTrials);
+                    timesToRepeat = blocOneTrials.length;
+                    $("#horizontal").removeClass("hide");
+                    $("#vertical").addClass("hide");
+                    blockTrialsNum = blocOneTrials.length;
+                }
+
+                $('.nimstim img').attr('src', 'img/pic1.png');
+                bugout.downloadLog();
+                bugout = new debugout();
+                bugout.realTimeLoggingOn = true;
+                bugout.autoTrim = false;
+
                 // }
                 // else {
-                    bugout.downloadLog();
-                    $('.startTrial').text('End of Trials!');    // say that the trials are ended
+                bugout.downloadLog();
+                $('.startTrial').text('End of Trials!');    // say that the trials are ended
                 // }
             }
         });
+    }
+
+    var showImgAndStopTracking = function (ele, endDot, changeBlock) {
+        $(ele).attr('src', endDot);
+        $(ele).bind('mouseenter', function () {
+            stopTracking(event, changeBlock)
+        });            // stop the tracking once one of the stimuli is selected
     }
 
     var displayStimuli = function () {
@@ -147,7 +158,7 @@ $(document).ready(function () {
         var endDot = redImgPrefix + currTrial[1] + '.png';
         // var dotPosition = currTrial[2];
 
-        $(".startDot").attr('src',startDot).removeClass("hide");
+        $(".startDot").attr('src', startDot).removeClass("hide");
         $(".startTrial").addClass("hide-for-small-only  hide-for-medium-up");
         activeTrial = currTrial;
         bugout.log("0,0,0,0,0");               // marks as the separation between two trials
@@ -155,36 +166,32 @@ $(document).ready(function () {
         $('#up').attr('src', '');
         $('#down').attr('src', '');
         $('#right').attr('src', '');
-        if(currentBlock==1){
-            if (currTrial[2] == 1)
-                $('#left').attr('src', endDot);
-            else
-                $('#right').attr('src', endDot);
-        }
-        else{
-            if (currTrial[2] == 1)
-                $('#up').attr('src', endDot);
-            else
-                $('#down').attr('src', endDot);
-        }
 
-
-        if (completeList.length == 1)
-            completeList = Array.from(blocOneTrials);   // restart again once a block is finished
-        else
-            completeList.splice(randIndex, 1);          // else remove the trial from the trial list
+        // if (completeList.length == 1)
+        //     completeList = Array.from(blocOneTrials);   // restart again once a block is finished
+        // else
+        completeList.splice(randIndex, 1);          // else remove the trial from the trial list
 
         $(elementToBeTracked).mousemove(trackMouseMovement);        // enable the mouse coordinate tracking
-        var changeBlock = currTrial[3] == currentBlock;
-        $('#left').bind('mouseenter', function () {
-            stopTracking(event, changeBlock)
-        });            // stop the tracking once one of the stimuli is selected
-        $('#right').bind('mouseenter', function () {
-            stopTracking(event, changeBlock)
-        });            // stop the tracking once one of the stimuli is selected
+        var changeBlock = completeList.length <= 0;
+
+        if (currentBlock == 1) {
+            if (currTrial[2] == 1)
+                showImgAndStopTracking($('#left'), endDot, changeBlock);
+            else
+                showImgAndStopTracking($('#right'), endDot, changeBlock);
+        }
+        else {
+            if (currTrial[2] == 1)
+                showImgAndStopTracking($('#up'), endDot, changeBlock);
+            else
+                showImgAndStopTracking($('#down'), endDot, changeBlock);
+        }
     };
 
     var enableTrialButton = function () {
+        $(".startDot").addClass("hide");
+        $(".startTrial").removeClass("hide-for-small-only  hide-for-medium-up");
         $('.startTrial').bind('click', function () {
             $(this).unbind("click");                // remove the click functionality from the start button, until one of the stimuli is selected
             timesToRepeat--;
@@ -223,15 +230,15 @@ $(document).ready(function () {
         $('#welcomeMessage').addClass('hide');
         $(elementToBeTracked).removeClass('hide');
         var parentEle = $(event.target).parent();
-        if($(parentEle).hasClass("horizon")){
-            currentBlock=1;
+        if ($(parentEle).hasClass("horizon")) {
+            currentBlock = 1;
             timesToRepeat = blocOneTrials.length;
             completeList = Array.from(blocOneTrials);
             blockTrialsNum = blocOneTrials.length;
             $("#horizontal").removeClass("hide");
         }
-        else{
-            currentBlock=2;
+        else {
+            currentBlock = 2;
             timesToRepeat = blocTwoTrials.length;
             completeList = Array.from(blocTwoTrials);
             blockTrialsNum = blocTwoTrials.length;
