@@ -25,13 +25,14 @@ var redImgPrefix = 'img/red/'; // location of red dots
 var blackImgPrefix = 'img/black/'; // location of black dots
 var initTime; // to store the initial time for every trial
 var timesToRepeat; // repeat the block 10 times
-
 var elementToBeTracked;
 var panelOffsetHeight = $('#toBeTracked .panel').height();
 var panelOffsetLeft = $('#toBeTracked .panel').offset().left;
 var panelOffsetTop = $('#toBeTracked .panel').offset().top;
 var blockTrialsNum;
 var currentBlock;
+var startDot;
+var endDot;
 $(document).ready(function () {
 
     function trackMouseMovement(event) {
@@ -63,6 +64,9 @@ $(document).ready(function () {
         if (currentBlock == 2)
             ele = $('#vertical .startDot');
         $(ele).one('mousemove', function () {
+            startDot = blackImgPrefix + activeTrial[0] + '.png';
+            $(ele).attr('src', startDot);
+            hideStimuli();
             $(elementToBeTracked).unbind("mousemove");          // stop the mouse coordinate tracking
             $(".trialText").show();
             if (timesToRepeat == blockTrialsNum / 2) {
@@ -102,31 +106,36 @@ $(document).ready(function () {
         startBackTracking();
     };
 
-    var showImgAndStopTracking = function (ele, endDot) {
+    var showImgAndStopTracking = function (ele) {
         $(".trialText").hide();
         $(ele).attr('src', endDot);
         $(ele).one('mouseenter', function () {
-            // $(ele).unbind('mouseenter');
+            startDot = redImgPrefix + activeTrial[0] + '.png';
+            endDot = blackImgPrefix + activeTrial[1] + '.png';
+            $(ele).attr('src', endDot);
+            $(".startDot").attr('src', startDot);
             stopTracking();
         });            // stop the tracking once one of the stimuli is selected
+    };
+
+    function hideStimuli() {
+        $('#left').attr('src', '');
+        $('#up').attr('src', '');
+        $('#down').attr('src', '');
+        $('#right').attr('src', '');
     };
 
     var displayStimuli = function () {
         initTime = new Date();
         var randIndex = Math.floor(Math.random() * completeList.length);    // generate a random integer governed by the length of the array
         var currTrial = completeList[randIndex];                            // get the current trial values based on the random index generated above
-        var startDot = blackImgPrefix + currTrial[0] + '.png';
-        var endDot = redImgPrefix + currTrial[1] + '.png';
-        // var dotPosition = currTrial[2];
+        startDot = blackImgPrefix + currTrial[0] + '.png';
+        endDot = redImgPrefix + currTrial[1] + '.png';
 
         $(".startDot").attr('src', startDot);
-        // $(".startTrial").addClass("hide-for-small-only  hide-for-medium-up");
         activeTrial = currTrial;
         bugout.log("0,0,0,0,0");               // marks as the separation between two trials
-        $('#left').attr('src', '');
-        $('#up').attr('src', '');
-        $('#down').attr('src', '');
-        $('#right').attr('src', '');
+        hideStimuli();
 
         completeList.splice(randIndex, 1);          // else remove the trial from the trial list
 
@@ -135,15 +144,15 @@ $(document).ready(function () {
 
         if (currentBlock == 1) {
             if (currTrial[2] == 1)
-                showImgAndStopTracking($('#left'), endDot);
+                showImgAndStopTracking($('#left'));
             else
-                showImgAndStopTracking($('#right'), endDot);
+                showImgAndStopTracking($('#right'));
         }
         else {
             if (currTrial[2] == 1)
-                showImgAndStopTracking($('#up'), endDot);
+                showImgAndStopTracking($('#up'));
             else
-                showImgAndStopTracking($('#down'), endDot);
+                showImgAndStopTracking($('#down'));
         }
     };
 
@@ -160,8 +169,6 @@ $(document).ready(function () {
     };
 
     var activateBlock = function (activateHorizon) { // 1 for horizon and 2 for vertical
-        // if (blockCount > 2)
-        //     return;
         $('#welcomeMessage').addClass('hide');
         $("#toBeTracked").removeClass('hide');
         if (activateHorizon) {
