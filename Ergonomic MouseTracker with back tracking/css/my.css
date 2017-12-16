@@ -56,3 +56,7 @@
     align-items: center;
     justify-content: center;
 }
+
+.fixImg{
+    height: 125px;
+}
