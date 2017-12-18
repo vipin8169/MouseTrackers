@@ -121,10 +121,10 @@ $(document).ready(function () {
     };
 
     function hideStimuli() {
-        $('#left').attr('src', '');
-        $('#up').attr('src', '');
-        $('#down').attr('src', '');
-        $('#right').attr('src', '');
+        $('#left').attr('src', 'img/1x1.png');
+        $('#up').attr('src', 'img/1x1.png');
+        $('#down').attr('src', 'img/1x1.png');
+        $('#right').attr('src', 'img/1x1.png');
     };
 
     var displayStimuli = function () {
