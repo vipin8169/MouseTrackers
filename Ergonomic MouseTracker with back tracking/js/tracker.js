@@ -5,7 +5,6 @@ var blocTwoTrials = [[1, 1, 1, 2, 1], [1, 1, 1, 2, 2], [1, 1, 1, 2, 3], [1, 1, 2
     [2, 3, 2, 2, 3], [3, 1, 1, 2, 1], [3, 1, 1, 2, 2], [3, 1, 1, 2, 3], [3, 1, 2, 2, 1], [3, 1, 2, 2, 2], [3, 1, 2, 2, 3], [3, 2, 1, 2, 1], [3, 2, 1, 2, 2],
     [3, 2, 1, 2, 3], [3, 2, 2, 2, 1], [3, 2, 2, 2, 2], [3, 2, 2, 2, 3], [3, 3, 1, 2, 1], [3, 3, 1, 2, 2], [3, 3, 1, 2, 3], [3, 3, 2, 2, 1], [3, 3, 2, 2, 2],
     [3, 3, 2, 2, 3]];
-// blocOneTrials = [[1, 2, 2, 1, 1], [2, 1, 1, 1, 2], [1, 3, 2, 1, 3], [3, 1, 1, 1, 4]];
 var blocOneTrials = [[1, 1, 1, 1, 1], [1, 1, 1, 1, 2], [1, 1, 1, 1, 3], [1, 1, 2, 1, 1], [1, 1, 2, 1, 2], [1, 1, 2, 1, 3], [1, 2, 1, 1, 1], [1, 2, 1, 1, 2],
     [1, 2, 1, 1, 3], [1, 2, 2, 1, 1], [1, 2, 2, 1, 2], [1, 2, 2, 1, 3], [1, 3, 1, 1, 1], [1, 3, 1, 1, 2], [1, 3, 1, 1, 3], [1, 3, 2, 1, 1], [1, 3, 2, 1, 2],
     [1, 3, 2, 1, 3], [2, 1, 1, 1, 1], [2, 1, 1, 1, 2], [2, 1, 1, 1, 3], [2, 1, 2, 1, 1], [2, 1, 2, 1, 2], [2, 1, 2, 1, 3], [2, 2, 1, 1, 1], [2, 2, 1, 1, 2],
@@ -20,6 +19,7 @@ var enableConsoleLogging = false;
 var blockCount = 1;
 bugout.autoTrim = false;
 bugout.realTimeLoggingOn = enableConsoleLogging;
+// blocOneTrials = [[1, 2, 2, 1, 1], [2, 1, 1, 1, 2], [1, 3, 2, 1, 3], [3, 1, 1, 1, 4]];
 // blocTwoTrials = [[1, 3, 2, 2, 1], [2, 3, 1, 2, 1], [1, 2, 2, 2, 2], [3, 3, 1, 2, 20]];
 var completeList;
 var redImgPrefix = 'img/red/'; // location of red dots
@@ -84,6 +84,7 @@ $(document).ready(function () {
                     $('#purpose').addClass('hide');
                     $('#instructions').html("You just finished block one! Now, take as much rest as you want. In next experiment, your task is to move the cursor to the image of a MALE face if the cursor is a FLOWER and move the cursor to the image of a FEMALE face if the cursor is a SPIDER. You may start when you are ready.");
                     activateBlock(currentBlock != 1);
+                    $('#blockPrompt').removeClass("hide");
                     bugout.downloadLog();
                     bugout = new debugout();
                     bugout.autoTrim = false;
@@ -129,6 +130,7 @@ $(document).ready(function () {
     };
 
     var displayStimuli = function () {
+        $('#blockPrompt').addClass("hide");
         initTime = new Date();
         var randIndex = Math.floor(Math.random() * completeList.length);    // generate a random integer governed by the length of the array
         var currTrial = completeList[randIndex];                            // get the current trial values based on the random index generated above
