@@ -16,9 +16,10 @@ var blocOneTrials = [[1, 1, 1, 1, 1], [1, 1, 1, 1, 2], [1, 1, 1, 1, 3], [1, 1, 2
 var activeTrial = []; // stores the current active trial in progress
 var bugout = new debugout();
 var beginOtherBlock = false;
+var enableConsoleLogging = false;
 var blockCount = 1;
 bugout.autoTrim = false;
-bugout.realTimeLoggingOn = false;
+bugout.realTimeLoggingOn = enableConsoleLogging;
 // blocTwoTrials = [[1, 3, 2, 2, 1], [2, 3, 1, 2, 1], [1, 2, 2, 2, 2], [3, 3, 1, 2, 20]];
 var completeList;
 var redImgPrefix = 'img/red/'; // location of red dots
@@ -72,7 +73,7 @@ $(document).ready(function () {
             if (timesToRepeat == blockTrialsNum / 2) {
                 bugout.downloadLog();
                 bugout = new debugout();
-                bugout.realTimeLoggingOn = false;
+                bugout.realTimeLoggingOn = enableConsoleLogging;
                 bugout.autoTrim = false;
             }
             if (timesToRepeat <= 0) {
@@ -87,7 +88,7 @@ $(document).ready(function () {
                     bugout = new debugout();
                     bugout.autoTrim = false;
                     // blockTrialsNum = blocTwoTrials.length;
-                    bugout.realTimeLoggingOn = false;
+                    bugout.realTimeLoggingOn = enableConsoleLogging;
                 }
                 else {
                     bugout.downloadLog();
@@ -198,4 +199,13 @@ $(document).ready(function () {
         activateBlock($(parentEle).hasClass("horizon"));
         enableTrialButton();
     });
+
+    $('#enableConsoleLog').on('click', function () {
+        enableConsoleLogging = !enableConsoleLogging;
+        bugout.realTimeLoggingOn = enableConsoleLogging;
+        if (enableConsoleLogging)
+            $(this).html("Disable logging to console");
+        else
+            $(this).html("Enable logging to console")
+    })
 });
