@@ -21,3 +21,7 @@
 #startTrial.white {
     background-color: red !important;
 }
+
+.hideButt {
+    display: none !important;
+}
