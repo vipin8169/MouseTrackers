@@ -53,6 +53,7 @@ var imgPrefix = 'img/face/'; // location of faces in the local
 var botImgPrefix = 'img/target/'; // location of faces in the local
 var cursors = ["url('img/cursor/spider.cur'), pointer", "url('img/cursor/flower.png'), pointer"]; //spider=0 & flower=1
 var initTime; // to store the initial time for every trial
+var backTrackDelay;
 var numberOfBlocks = 1;
 var timesToRepeat = blocOneTrials.length; // repeat the block
 
@@ -66,8 +67,7 @@ $(document).ready(function () {
 
     // stop the tracking, log the results
     function stopTracking(event, beginBlock2) {
-        bugout.log("88,0,0,0,0");
-        ;
+        // bugout.log("88,0,0,0,0");
         // console.log("----------------uptracking finished----------------");;
         if (event.target.id == 'left') {
             // console.log("Stimuli= " + activeTrial + ',1');                               // log what are we showing to the user
@@ -77,7 +77,7 @@ $(document).ready(function () {
             bugout.log(activeTrial + ',2');                               // log what are we showing to the user
             // console.log("Stimuli= " + activeTrial + ',2');                               // log what are we showing to the user
         }
-        bugout.log("99,0,0,0,0");
+        bugout.log("99," + activeTrial[3] + ",0,0,0");
         // console.log("----------------downtracking started----------------");
         // $(elementToBeTracked).css('cursor', 'auto');        // change the cursor to default
         $("#left").unbind("mouseenter");                // unbind the mouseenter event from the stimuli, which is binded on line 57
@@ -116,15 +116,21 @@ $(document).ready(function () {
         }
     }
 
-    function endThisTrial(ele, removeFaceBinding) {
+    function endThisTrial(logIdentifier, delay) {
         $('#botTarget').addClass('hide');
         $('#startTrial').text("Start Trial!").removeClass('white hideButt');
         $(elementToBeTracked).css('cursor', 'auto');        // change the cursor to default
-        if (removeFaceBinding)
-            $('.nimstim').unbind('click');                // remove the click functionality from the start button, until one of the stimuli is selected
-        else
-            $(ele).unbind("mousemove");                // remove the click functionality from the start button, until one of the stimuli is selected
+        // if (removeFaceBinding)
+        $('.nimstim').unbind('click');                // remove the click functionality from the start button, until one of the stimuli is selected
+        // else
+        $('#botTarget').unbind("mousemove");                // remove the click functionality from the start button, until one of the stimuli is selected
         $(elementToBeTracked).unbind("mousemove");          // stop the mouse coordinate tracking
+
+        if(!!delay)
+            bugout.log(logIdentifier + "," + activeTrial[3] + "," + delay  + ",0,1");
+        else
+            bugout.log(logIdentifier + "," + activeTrial[3] + ",0,0,2");
+
         if (timesToRepeat == blockTrialsNum / 2) {
             bugout.downloadLog();
             bugout = new debugout();
@@ -153,24 +159,28 @@ $(document).ready(function () {
     }
 
     function startBackTracking(beginBlock2, faceSelected) {
+        backTrackDelay = new Date();
         $(elementToBeTracked).mousemove(trackMouseMovement);        // enable the mouse coordinate tracking
         $('#startTrial').text("Come back!").removeClass('white').addClass("hideButt");
         var targetImg = activeTrial[2] == 1 ? botImgPrefix + 'web.png' : botImgPrefix + 'vase.png';
         $('#botTarget').removeClass('hide').attr('src', targetImg);
 
-        console.log("activeTrial[2] === " + activeTrial[2]);
-        console.log("activeTrial[3] === " + activeTrial[3]);
-
-        if (activeTrial[2] == activeTrial[3]) {
-            $('#botTarget').bind('mousemove', function () {
-                endThisTrial($(this), false);
-            });
-        }
-        else {
-            $('.nimstim').bind('click', function () {
-                endThisTrial($(this), true);
-            });
-        }
+        // if (activeTrial[2] == activeTrial[3]) {
+        $('#botTarget').bind('mousemove', function () {
+            if (activeTrial[2] == activeTrial[3])
+                endThisTrial(88, new Date() - backTrackDelay);
+            else
+                endThisTrial(66);
+        });
+        // }
+        // else {
+        $('.nimstim').bind('click', function () {
+            if (activeTrial[2] == activeTrial[3])
+                endThisTrial(66);
+            else
+                endThisTrial(77, new Date() - backTrackDelay);
+        });
+        // }
     }
 
     var displayStimuli = function () {
@@ -185,7 +195,6 @@ $(document).ready(function () {
         // console.log("Stimuli= " + currTrial);                               // log what are we showing to the user
 
         // on the basis of the trial, show the cursor accordingly
-        console.log("block == " + currTrial[4]);
         if (currTrial[3] == -1)
             $('#startTrial').text("Drag the cursor to one of the photos");
         else if (currTrial[3] == 1)
