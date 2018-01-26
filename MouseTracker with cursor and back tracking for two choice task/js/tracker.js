@@ -23,7 +23,7 @@ var blocOneTrials = [[1, 5, 1, 1, 1], [1, 5, 1, 2, 1], [1, 6, 1, 1, 1], [1, 6, 1
     [6, 4, 2, 2, 1], [7, 1, 2, 1, 1], [7, 1, 2, 2, 1], [7, 2, 2, 1, 1], [7, 2, 2, 2, 1], [7, 3, 2, 1, 1], [7, 3, 2, 2, 1],
     [7, 4, 2, 1, 1], [7, 4, 2, 2, 1], [8, 1, 2, 1, 1], [8, 1, 2, 2, 1], [8, 2, 2, 1, 1], [8, 2, 2, 2, 1], [8, 3, 2, 1, 1],
     [8, 3, 2, 2, 1], [8, 4, 2, 1, 1], [8, 4, 2, 2, 1]];
-//blocOneTrials = [[1, 5, 1, 1, 1], [1, 5, 1, 2, 1], [8, 4, 2, 1, 1], [8, 4, 2, 2, 1]];
+// blocOneTrials = [[1, 5, 1, 1, 1], [1, 5, 1, 2, 1], [8, 4, 2, 1, 1], [8, 4, 2, 2, 1]];
 
 var blocTwoTrials = [[1, 5, 1, 1, 2], [1, 5, 1, 2, 2], [1, 6, 1, 1, 2], [1, 6, 1, 2, 2], [1, 7, 1, 1, 2], [1, 7, 1, 2, 2],
     [1, 8, 1, 1, 2], [1, 8, 1, 2, 2], [2, 5, 1, 1, 2], [2, 5, 1, 2, 2], [2, 6, 1, 1, 2], [2, 6, 1, 2, 2], [2, 7, 1, 1, 2],
@@ -47,7 +47,7 @@ var blocTwoTrials = [[1, 5, 1, 1, 2], [1, 5, 1, 2, 2], [1, 6, 1, 1, 2], [1, 6, 1
 var activeTrial = [];
 var bugout = new debugout();
 bugout.autoTrim = false;
-//blocTwoTrials = [[1, 5, 1, 1, 2], [1, 5, 1, 2, 2], [8, 4, 2, 1, 2], [8, 4, 2, 2, 2]];
+// blocTwoTrials = [[1, 5, 1, 1, 2], [1, 5, 1, 2, 2], [8, 4, 2, 1, 2], [8, 4, 2, 2, 2]];
 var completeList = Array.from(blocOneTrials);
 var imgPrefix = 'img/face/'; // location of faces in the local
 var botImgPrefix = 'img/target/'; // location of faces in the local
@@ -116,7 +116,7 @@ $(document).ready(function () {
         }
     }
 
-    function endThisTrial(logIdentifier, delay) {
+    function endThisTrial(beginBlock2, logIdentifier, delay) {
         $('#botTarget').addClass('hide');
         $('#startTrial').text("Start Trial!").removeClass('white hideButt');
         $(elementToBeTracked).css('cursor', 'auto');        // change the cursor to default
@@ -132,9 +132,9 @@ $(document).ready(function () {
             bugout.log(logIdentifier + "," + activeTrial[3] + ",0,0,2");
 
         if (timesToRepeat == blockTrialsNum / 2) {
-            bugout.downloadLog();
-            bugout = new debugout();
-            bugout.autoTrim = false;
+            // bugout.downloadLog();
+            // bugout = new debugout();
+            // bugout.autoTrim = false;
         }
         if (timesToRepeat <= 0) {
             if (beginBlock2) {
@@ -146,9 +146,9 @@ $(document).ready(function () {
                 completeList = Array.from(blocTwoTrials);
                 timesToRepeat = blocTwoTrials.length;
                 $('.nimstim img').attr('src', 'img/pic1.png');
-                bugout.downloadLog();
-                bugout = new debugout();
-                bugout.autoTrim = false;
+                // bugout.downloadLog();
+                // bugout = new debugout();
+                // bugout.autoTrim = false;
                 blockTrialsNum = blocTwoTrials.length;
             }
             else {
@@ -168,17 +168,17 @@ $(document).ready(function () {
         // if (activeTrial[2] == activeTrial[3]) {
         $('#botTarget').bind('mousemove', function () {
             if (activeTrial[2] == activeTrial[3])
-                endThisTrial(88, new Date() - backTrackDelay);
+                endThisTrial(beginBlock2, 88, new Date() - backTrackDelay);
             else
-                endThisTrial(66);
+                endThisTrial(beginBlock2, 66);
         });
         // }
         // else {
         $('.nimstim').bind('click', function () {
             if (activeTrial[2] == activeTrial[3])
-                endThisTrial(66);
+                endThisTrial(beginBlock2, 66);
             else
-                endThisTrial(77, new Date() - backTrackDelay);
+                endThisTrial(beginBlock2, 77, new Date() - backTrackDelay);
         });
         // }
     }
@@ -191,7 +191,7 @@ $(document).ready(function () {
 
         activeTrial = currTrial;
         bugout.log("0,0,0,0,0");               // marks as the separation between two trials
-        0, 0, 0, 0, 0
+        // 0, 0, 0, 0, 0
         // console.log("Stimuli= " + currTrial);                               // log what are we showing to the user
 
         // on the basis of the trial, show the cursor accordingly
@@ -219,7 +219,7 @@ $(document).ready(function () {
         $(elementToBeTracked).mousemove(trackMouseMovement);        // enable the mouse coordinate tracking
         // $('#left').mouseenter(false, stopTracking);              // stop the tracking once one of the stimuli is selected
         // $('#right').mouseenter(false, stopTracking);
-        var blockOneGoing = currTrial[3] == 1;
+        var blockOneGoing = currTrial[4] == 1;
         $('#left').bind('mouseenter', function () {
             stopTracking(event, blockOneGoing)
         });            // stop the tracking once one of the stimuli is selected
