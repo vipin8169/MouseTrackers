@@ -127,9 +127,9 @@ $(document).ready(function () {
         $(elementToBeTracked).unbind("mousemove");          // stop the mouse coordinate tracking
 
         if(!!delay)
-            bugout.log(logIdentifier + "," + activeTrial[3] + "," + delay  + ",0,1");
+            bugout.log(logIdentifier + "," + activeTrial[2] + "," + delay  + ",0,1");
         else
-            bugout.log(logIdentifier + "," + activeTrial[3] + ",0,0,2");
+            bugout.log(logIdentifier + "," + activeTrial[2] + ",0,0,2");
 
         if (timesToRepeat == blockTrialsNum / 2) {
             // bugout.downloadLog();
