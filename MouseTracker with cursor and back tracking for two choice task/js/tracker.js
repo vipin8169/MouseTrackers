@@ -67,7 +67,7 @@ $(document).ready(function () {
 
     // stop the tracking, log the results
     function stopTracking(event, beginBlock2) {
-        // bugout.log("88,0,0,0,0");
+        bugout.log("88,0,0,0,0");
         // console.log("----------------uptracking finished----------------");;
         if (event.target.id == 'left') {
             // console.log("Stimuli= " + activeTrial + ',1');                               // log what are we showing to the user
@@ -160,7 +160,8 @@ $(document).ready(function () {
 
     function startBackTracking(beginBlock2, faceSelected) {
         backTrackDelay = new Date();
-        $(elementToBeTracked).mousemove(trackMouseMovement);        // enable the mouse coordinate tracking
+        if (activeTrial[2] != activeTrial[3])
+            $(elementToBeTracked).mousemove(trackMouseMovement);        // enable the mouse coordinate tracking
         $('#startTrial').text("Come back!").removeClass('white').addClass("hideButt");
         var targetImg = activeTrial[2] == 1 ? botImgPrefix + 'web.png' : botImgPrefix + 'vase.png';
         $('#botTarget').removeClass('hide').attr('src', targetImg);
@@ -168,15 +169,15 @@ $(document).ready(function () {
         // if (activeTrial[2] == activeTrial[3]) {
         $('#botTarget').bind('mousemove', function () {
             if (activeTrial[2] == activeTrial[3])
-                endThisTrial(beginBlock2, 88, new Date() - backTrackDelay);
+                endThisTrial(beginBlock2, 66, new Date() - backTrackDelay);
             else
-                endThisTrial(beginBlock2, 66);
+                endThisTrial(beginBlock2, 55);
         });
         // }
         // else {
         $('.nimstim').bind('click', function () {
             if (activeTrial[2] == activeTrial[3])
-                endThisTrial(beginBlock2, 66);
+                endThisTrial(beginBlock2, 55);
             else
                 endThisTrial(beginBlock2, 77, new Date() - backTrackDelay);
         });
