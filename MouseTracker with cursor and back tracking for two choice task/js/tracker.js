@@ -77,7 +77,7 @@ $(document).ready(function () {
             bugout.log(activeTrial + ',2');                               // log what are we showing to the user
             // console.log("Stimuli= " + activeTrial + ',2');                               // log what are we showing to the user
         }
-        bugout.log("99," + activeTrial[3] + ",0,0,0");
+        bugout.log("99," + activeTrial[2] + ",0,0,0");
         // console.log("----------------downtracking started----------------");
         // $(elementToBeTracked).css('cursor', 'auto');        // change the cursor to default
         $("#left").unbind("mouseenter");                // unbind the mouseenter event from the stimuli, which is binded on line 57
