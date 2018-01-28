@@ -160,7 +160,7 @@ $(document).ready(function () {
 
     function startBackTracking(beginBlock2, faceSelected) {
         backTrackDelay = new Date();
-        if (activeTrial[2] != activeTrial[3])
+        if (activeTrial[2] == activeTrial[3])
             $(elementToBeTracked).mousemove(trackMouseMovement);        // enable the mouse coordinate tracking
         $('#startTrial').text("Come back!").removeClass('white').addClass("hideButt");
         var targetImg = activeTrial[2] == 1 ? botImgPrefix + 'web.png' : botImgPrefix + 'vase.png';
