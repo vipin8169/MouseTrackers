@@ -64,7 +64,7 @@ var panelOffsetTop = $('#toBeTracked .panel').offset().top;
 var timeInterval = [1000, 1250, 1500, 1750];
 var blockTrialsNum = blocOneTrials.length;
 
-timeInterval = [0, 0];  // setting wait time to zero (quick fix for hansol's request)
+// timeInterval = [0, 0];  // setting wait time to zero (quick fix for hansol's request)
 
 $(document).ready(function () {
     // stop the tracking, log the results
@@ -200,12 +200,14 @@ $(document).ready(function () {
         // console.log("Stimuli= " + currTrial);                               // log what are we showing to the user
 
         // on the basis of the trial, show the cursor accordingly
-        if (currTrial[3] == -1)
-            $('#startTrial').text("Drag the cursor to one of the photos");
-        else if (currTrial[3] == 1)
-            $('#startTrial').text("Drag the spider to one of the photos");
-        else if (currTrial[3] == 2)
-            $('#startTrial').text("Drag the flower to one of the photos");
+        // if (currTrial[3] == -1)
+        //     $('#startTrial').text("Drag the cursor to one of the photos");
+        // else if (currTrial[3] == 1)
+        //     $('#startTrial').text("Drag the spider to one of the photos");
+        // else if (currTrial[3] == 2)
+        //     $('#startTrial').text("Drag the flower to one of the photos");
+
+        $('#startTrial').text("GO");
 
         // change the cursor to be shown
         if (currTrial[3] >= 0)
