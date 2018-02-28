@@ -29,3 +29,8 @@
 .fixHeightto100 {
     height: 100px;
 }
+
+.fixDimto100 {
+    height: 100px;
+    width: 100px;
+}
