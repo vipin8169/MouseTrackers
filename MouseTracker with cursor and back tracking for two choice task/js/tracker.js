@@ -63,8 +63,10 @@ var panelOffsetLeft = $('#toBeTracked .panel').offset().left;
 var panelOffsetTop = $('#toBeTracked .panel').offset().top;
 var timeInterval = [1000, 1250, 1500, 1750];
 var blockTrialsNum = blocOneTrials.length;
-$(document).ready(function () {
 
+timeInterval = [0, 0];  // setting wait time to zero (quick fix for hansol's request)
+
+$(document).ready(function () {
     // stop the tracking, log the results
     function stopTracking(event, beginBlock2) {
         bugout.log("88,0,0,0,0");
@@ -126,8 +128,8 @@ $(document).ready(function () {
         $('#botTarget').unbind("mousemove");                // remove the click functionality from the start button, until one of the stimuli is selected
         $(elementToBeTracked).unbind("mousemove");          // stop the mouse coordinate tracking
 
-        if(!!delay)
-            bugout.log(logIdentifier + "," + activeTrial[2] + "," + delay  + ",0,1");
+        if (!!delay)
+            bugout.log(logIdentifier + "," + activeTrial[2] + "," + delay + ",0,1");
         else
             bugout.log(logIdentifier + "," + activeTrial[2] + ",0,0,2");
 

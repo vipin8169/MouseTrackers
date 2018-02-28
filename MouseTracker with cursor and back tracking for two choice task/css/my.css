@@ -25,3 +25,7 @@
 .hideButt {
     display: none !important;
 }
+
+.fixHeightto100 {
+    height: 100px;
+}
