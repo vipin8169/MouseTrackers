@@ -70,13 +70,15 @@ $(document).ready(function () {
     // stop the tracking, log the results
     function stopTracking(event, beginBlock2) {
         bugout.log("88,0,0,0,0");
-        // console.log("----------------uptracking finished----------------");;
+        // console.log("----------------uptracking finished----------------");
+        var activeTrialCopy = jQuery.extend([], activeTrial);
+        activeTrialCopy.splice(2, 1);   // removing the second choice image from the log, as it is not required
         if (event.target.id == 'left') {
             // console.log("Stimuli= " + activeTrial + ',1');                               // log what are we showing to the user
-            bugout.log(activeTrial + ',1');                               // log what are we showing to the user
+            bugout.log(activeTrialCopy + ',1');                               // log what are we showing to the user
         }
         else {
-            bugout.log(activeTrial + ',2');                               // log what are we showing to the user
+            bugout.log(activeTrialCopy + ',2');                               // log what are we showing to the user
             // console.log("Stimuli= " + activeTrial + ',2');                               // log what are we showing to the user
         }
         bugout.log("99," + activeTrial[2] + ",0,0,0");
