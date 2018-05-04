@@ -36,6 +36,7 @@ var startDot;
 var endDot;
 var stopDot;
 var touchIcon = $("#touchIndicator");
+var pnum, blockNum;
 
 $(document).ready(function () {
 
@@ -78,12 +79,13 @@ $(document).ready(function () {
             $(elementToBeTracked).unbind("mousemove");          // stop the mouse coordinate tracking
             $(".trialText").show();
             if (timesToRepeat == blockTrialsNum / 2) {
-                bugout.downloadLog();
-                bugout = new debugout();
-                bugout.realTimeLoggingOn = enableConsoleLogging;
-                bugout.autoTrim = false;
+                // bugout.downloadLog();
+                // bugout = new debugout();
+                // bugout.realTimeLoggingOn = enableConsoleLogging;
+                // bugout.autoTrim = false;
             }
             if (timesToRepeat <= 0) {
+                $(touchIcon).addClass("hide");
                 if (beginOtherBlock && blockCount < 2) {
                     blockCount++;
                     $('#welcomeMessage').removeClass('hide');
@@ -92,14 +94,19 @@ $(document).ready(function () {
                     $('#instructions').html("You just finished block one! Now, take as much rest as you want. In next experiment, your task is to move the cursor to the image of a MALE face if the cursor is a FLOWER and move the cursor to the image of a FEMALE face if the cursor is a SPIDER. You may start when you are ready.");
                     activateBlock(currentBlock != 1);
                     $('#blockPrompt').removeClass("hide");
-                    bugout.downloadLog();
-                    bugout = new debugout();
-                    bugout.autoTrim = false;
-                    // blockTrialsNum = blocTwoTrials.length;
-                    bugout.realTimeLoggingOn = enableConsoleLogging;
                 }
                 else {
-                    bugout.downloadLog();
+                    var fd = new FormData();
+                    var file = new Blob([bugout.output], {type: 'plain/text'});
+                    fd.append('key','ergonomics/${filename}');
+                    fd.append('file', file, 'filename'+pnum.val()+blockNum.val()+'.txt');
+                    $.ajax({
+                        url: 'http://touchtracker.s3-us-west-1.amazonaws.com/',
+                        method: 'post',
+                        data: fd,
+                        processData: false,        //this...
+                        contentType: false         //and this is for formData type
+                    });
                     $('#startTrial').text('End of Trials!').removeClass('white');    // say that the trials are ended
                 }
             }
@@ -217,8 +224,8 @@ $(document).ready(function () {
     };
 
     var activateBlock = function (activateHorizon) { // 1 for horizon and 2 for vertical
-        var pnum = $("input[name='pNum']");
-        var blockNum = $("input[name='blockNum']");
+        pnum = $("input[name='pNum']");
+        blockNum = $("input[name='blockNum']");
         bugout.log("0,0,0," + pnum.val() + "," + blockNum.val());
         $('#welcomeMessage').addClass('hide');
         $("#toBeTracked").removeClass('hide');
