@@ -197,7 +197,10 @@ $(document).ready(function () {
         if ((cursorLocation.left > targetLoc.left && cursorLocation.left < targetLoc.right) || (cursorLocation.right > targetLoc.left && cursorLocation.right < targetLoc.right))
             if ((cursorLocation.top > targetLoc.top && cursorLocation.top < targetLoc.bottom) || (cursorLocation.bottom > targetLoc.top && cursorLocation.bottom < targetLoc.bottom)) {
                 $(stopDot).trigger("triggerTouchEnd");
-                stopDot = $(".startDot:visible");
+                if ($(stopDot).get(0) == $(".startDot:visible").get(0))
+                    $(touchIcon).addClass("hide");
+                else
+                    stopDot = $(".startDot:visible");
             }
     });
 
