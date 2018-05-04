@@ -147,7 +147,6 @@ $(document).ready(function () {
             left: touchLocation.left + touchLocation.width / 2
         });
 
-        // console.log(touchLocation);
         $(".startDot").attr('src', startDot);
         activeTrial = currTrial;
         bugout.log("0,0,0,0,0");               // marks as the separation between two trials
@@ -190,8 +189,6 @@ $(document).ready(function () {
         e.stopPropagation();
         var targetLoc = stopDot[0].getBoundingClientRect();
         var cursorLocation = e.target.getBoundingClientRect();
-        console.log(stopDot[0].getBoundingClientRect());
-        console.log(e.target.getBoundingClientRect());
         if ((cursorLocation.left > targetLoc.left && cursorLocation.left < targetLoc.right) || (cursorLocation.right > targetLoc.left && cursorLocation.right < targetLoc.right))
             if ((cursorLocation.top > targetLoc.top && cursorLocation.top < targetLoc.bottom) || (cursorLocation.bottom > targetLoc.top && cursorLocation.bottom < targetLoc.bottom)) {
                 stopTracking();
