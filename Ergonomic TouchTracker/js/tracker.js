@@ -34,6 +34,7 @@ var blockTrialsNum;
 var currentBlock;
 var startDot;
 var endDot;
+var stopDot;
 var touchIcon = $("#touchIndicator");
 
 $(document).ready(function () {
@@ -66,7 +67,7 @@ $(document).ready(function () {
         var ele = $('#horizontal .startDot');
         if (currentBlock == 2)
             ele = $('#vertical .startDot');
-        $(ele).one('mousemove', function () {
+        $(ele).one('triggerTouchEnd', function () {
             startDot = blackImgPrefix + activeTrial[0] + '.png';
             $(ele).attr('src', startDot);
             hideStimuli();
@@ -115,7 +116,7 @@ $(document).ready(function () {
     var showImgAndStopTracking = function (ele) {
         $(".trialText").hide();
         $(ele).attr('src', endDot);
-        $(ele).one('mouseenter', function () {
+        $(ele).one('triggerTouchEnd', function () {
             startDot = redImgPrefix + activeTrial[0] + '.png';
             endDot = blackImgPrefix + activeTrial[1] + '.png';
             $(ele).attr('src', endDot);
@@ -146,7 +147,7 @@ $(document).ready(function () {
             left: touchLocation.left + touchLocation.width / 2
         });
 
-        console.log(touchLocation);
+        // console.log(touchLocation);
         $(".startDot").attr('src', startDot);
         activeTrial = currTrial;
         bugout.log("0,0,0,0,0");               // marks as the separation between two trials
@@ -158,18 +159,46 @@ $(document).ready(function () {
         beginOtherBlock = completeList.length <= 0;
 
         if (currentBlock == 1) {
-            if (currTrial[2] == 1)
+            if (currTrial[2] == 1) {
                 showImgAndStopTracking($('#left'));
-            else
+                stopDot = $('#left');
+            }
+            else {
                 showImgAndStopTracking($('#right'));
+                stopDot = $('#right');
+            }
         }
         else {
-            if (currTrial[2] == 1)
+            if (currTrial[2] == 1) {
                 showImgAndStopTracking($('#up'));
-            else
+                stopDot = $('#up');
+            }
+            else {
                 showImgAndStopTracking($('#down'));
+                stopDot = $('#down');
+            }
         }
     };
+
+    $(touchIcon).bind("touchmove", function (e) {
+        e.preventDefault();
+        var orig = e.originalEvent;
+        var x = orig.changedTouches[0].pageX;
+        var y = orig.changedTouches[0].pageY;
+        $(touchIcon).offset({top: y, left: x});
+    }).on("touchend", function (e) {
+        e.stopPropagation();
+        var targetLoc = stopDot[0].getBoundingClientRect();
+        var cursorLocation = e.target.getBoundingClientRect();
+        console.log(stopDot[0].getBoundingClientRect());
+        console.log(e.target.getBoundingClientRect());
+        if ((cursorLocation.left > targetLoc.left && cursorLocation.left < targetLoc.right) || (cursorLocation.right > targetLoc.left && cursorLocation.right < targetLoc.right))
+            if ((cursorLocation.top > targetLoc.top && cursorLocation.top < targetLoc.bottom) || (cursorLocation.bottom > targetLoc.top && cursorLocation.bottom < targetLoc.bottom)) {
+                stopTracking();
+                $(stopDot).trigger("triggerTouchEnd");
+                stopDot = $(".startDot:visible");
+            }
+    });
 
     var enableTrialButton = function () {
         var ele = $('#horizontal .startDot');
