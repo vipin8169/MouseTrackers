@@ -217,6 +217,9 @@ $(document).ready(function () {
     };
 
     var activateBlock = function (activateHorizon) { // 1 for horizon and 2 for vertical
+        var pnum = $("input[name='pNum']");
+        var blockNum = $("input[name='blockNum']");
+        bugout.log("0,0,0," + pnum.val() + "," + blockNum.val());
         $('#welcomeMessage').addClass('hide');
         $("#toBeTracked").removeClass('hide');
         if (activateHorizon) {
