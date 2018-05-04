@@ -55,6 +55,10 @@ $(document).ready(function () {
                 (doc && doc.scrollTop || body && body.scrollTop || 0) -
                 (doc && doc.clientTop || body && body.clientTop || 0 );
         }
+        else {
+            event.pageX = event.target.getBoundingClientRect().x;
+            event.pageY = event.target.getBoundingClientRect().y;
+        }
         var userX = event.pageX - panelOffsetLeft;                   // get the x-coordinate of the user
         var userY = event.pageY - (panelOffsetTop + areaHeight);     // get the y coordinate of the user
         userY *= -1;
@@ -63,7 +67,7 @@ $(document).ready(function () {
     }
 
     function startBackTracking() {
-        $(elementToBeTracked).mousemove(trackMouseMovement);        // enable the mouse coordinate tracking
+        // $(elementToBeTracked).mousemove(trackMouseMovement);        // enable the mouse coordinate tracking
         var ele = $('#horizontal .startDot');
         if (currentBlock == 2)
             ele = $('#vertical .startDot');
@@ -154,7 +158,7 @@ $(document).ready(function () {
 
         completeList.splice(randIndex, 1);          // else remove the trial from the trial list
 
-        $(elementToBeTracked).mousemove(trackMouseMovement);        // enable the mouse coordinate tracking
+        // $(elementToBeTracked).mousemove(trackMouseMovement);        // enable the mouse coordinate tracking
         beginOtherBlock = completeList.length <= 0;
 
         if (currentBlock == 1) {
@@ -185,13 +189,13 @@ $(document).ready(function () {
         var x = orig.changedTouches[0].pageX;
         var y = orig.changedTouches[0].pageY;
         $(touchIcon).offset({top: y, left: x});
+        trackMouseMovement(e);
     }).on("touchend", function (e) {
         e.stopPropagation();
         var targetLoc = stopDot[0].getBoundingClientRect();
         var cursorLocation = e.target.getBoundingClientRect();
         if ((cursorLocation.left > targetLoc.left && cursorLocation.left < targetLoc.right) || (cursorLocation.right > targetLoc.left && cursorLocation.right < targetLoc.right))
             if ((cursorLocation.top > targetLoc.top && cursorLocation.top < targetLoc.bottom) || (cursorLocation.bottom > targetLoc.top && cursorLocation.bottom < targetLoc.bottom)) {
-                stopTracking();
                 $(stopDot).trigger("triggerTouchEnd");
                 stopDot = $(".startDot:visible");
             }
