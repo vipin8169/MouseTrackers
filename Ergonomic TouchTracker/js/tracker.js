@@ -101,7 +101,7 @@ $(document).ready(function () {
                     fd.append('key','ergonomics/${filename}');
                     fd.append('file', file, 'filename'+pnum.val()+blockNum.val()+'.txt');
                     $.ajax({
-                        url: 'http://touchtracker.s3-us-west-1.amazonaws.com/',
+                        url: 'http://hansoltracker.s3.us-east-2.amazonaws.com/',
                         method: 'post',
                         data: fd,
                         processData: false,        //this...
