@@ -22,6 +22,13 @@
     background-color: red !important;
 }
 
+#horizontal .panel{
+    display: flex;
+    height: 80vh;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 #vertical .panel {
     height: 90vh;
 }
