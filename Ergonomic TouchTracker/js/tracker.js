@@ -99,7 +99,7 @@ $(document).ready(function () {
                     var fd = new FormData();
                     var file = new Blob([bugout.output], {type: 'plain/text'});
                     fd.append('key','ergonomics/${filename}');
-                    fd.append('file', file, 'filename'+pnum.val()+blockNum.val()+'.txt');
+                    fd.append('file', file, 'filename_p'+pnum.val()+'b'+blockNum.val()+'.txt');
                     $.ajax({
                         url: 'http://hansoltracker.s3.us-east-2.amazonaws.com/',
                         method: 'post',
