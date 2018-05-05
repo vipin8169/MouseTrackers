@@ -9,6 +9,11 @@
     cursor: inherit;
 }
 
+body {
+    /*adding this to ensure the page doesn't refresh on dragging down*/
+    overscroll-behavior: contain;
+}
+
 .panel {
     margin: 20px;
     /*height: 100vh;*/
