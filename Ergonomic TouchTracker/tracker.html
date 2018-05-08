@@ -127,8 +127,18 @@
             <img id="scaleImg" src="img/scale.png">
             <form action="#" class="row">
                 <div class="columns small-offset-4 small-4">
-                    <label>Response: <input type="number" name="scaleRes" min="1" step="1" max="9"
-                                            placeholder="Enter a value from 1-9"><br></label>
+                    <fieldset>
+                        <legend>Choose Your Response</legend>
+                        <input type="radio" name="scaleRes" value="1" id="res1" required><label for="res1">1</label>
+                        <input type="radio" name="scaleRes" value="2" id="res2" required><label for="res2">2</label>
+                        <input type="radio" name="scaleRes" value="3" id="res3" required><label for="res3">3</label>
+                        <input type="radio" name="scaleRes" value="4" id="res4" required><label for="res4">4</label>
+                        <input type="radio" name="scaleRes" value="5" id="res5" required><label for="res5">5</label>
+                        <input type="radio" name="scaleRes" value="6" id="res6" required><label for="res6">6</label>
+                        <input type="radio" name="scaleRes" value="7" id="res7" required><label for="res7">7</label>
+                        <input type="radio" name="scaleRes" value="8" id="res8" required><label for="res8">8</label>
+                        <input type="radio" name="scaleRes" value="9" id="res9" required><label for="res9">9</label>
+                    </fieldset>
                 </div>
                 <div class="columns small-4">
                     <a role="button" id="submitToAWS" href="#" class="button">Submit</a>

@@ -121,14 +121,15 @@ $(document).ready(function () {
 
     $("#submitToAWS").on("click", function (e) {
         e.preventDefault();
-        var scaleRes = $("input[name='scaleRes']").val();
-        if (!!scaleRes && scaleRes < 10 && scaleRes > 0) {
-            bugout.log("55,0,0,0," + scaleRes);
+        var scaleRes = document.querySelector('input[name="scaleRes"]:checked');
+        if (!!scaleRes) {
+            bugout.log("55,0,0,0," + scaleRes.value);
             uploadToAWS();
+            alert("Your response has been submitted.\nThank You!");
             $(e.target).unbind("click")
         }
         else
-            alert("Please enter a response in the range 1-9");
+            alert("Please choose your response");
     });
 
     function stopTracking() {
