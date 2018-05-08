@@ -110,7 +110,7 @@ $(document).ready(function () {
         var filename = 'log_' + pnum.val() + '_' + code.val() + '_b' + blockNum.val() + '_' + vertical + '.txt';
         fd.append('file', file, filename);
         $.ajax({
-            url: 'http://hansoltracker.s3.us-east-2.amazonaws.com/',
+            url: 'http://hansoltracker.s3.amazonaws.com/',
             method: 'post',
             data: fd,
             processData: false,        //this...
