@@ -94,24 +94,41 @@ $(document).ready(function () {
                     $('#blockPrompt').removeClass("hide");
                 }
                 else {
-                    var fd = new FormData();
-                    var file = new Blob([bugout.output], {type: 'plain/text'});
-                    fd.append('key', 'ergonomics/${filename}');
-                    var filename = 'log_' + pnum.val() + '_' + code.val() + '_b' + blockNum.val() + '_' + vertical + '.txt';
-                    fd.append('file', file, filename);
-                    $.ajax({
-                        url: 'http://hansoltracker.s3.us-east-2.amazonaws.com/',
-                        method: 'post',
-                        data: fd,
-                        processData: false,        //this...
-                        contentType: false         //and this is for formData type
-                    });
+                    $("#cogScale").removeClass("hide");
+                    $("#toBeTracked").addClass("hide");
                     $('#startTrial').text('End of Trials!').removeClass('white');    // say that the trials are ended
                 }
             }
         });
         enableTrialButton();
     };
+
+    function uploadToAWS() {
+        var fd = new FormData();
+        var file = new Blob([bugout.output], {type: 'plain/text'});
+        fd.append('key', 'ergonomics/${filename}');
+        var filename = 'log_' + pnum.val() + '_' + code.val() + '_b' + blockNum.val() + '_' + vertical + '.txt';
+        fd.append('file', file, filename);
+        $.ajax({
+            url: 'http://hansoltracker.s3.us-east-2.amazonaws.com/',
+            method: 'post',
+            data: fd,
+            processData: false,        //this...
+            contentType: false         //and this is for formData type
+        });
+    }
+
+    $("#submitToAWS").on("click", function (e) {
+        e.preventDefault();
+        var scaleRes = $("input[name='scaleRes']").val();
+        if (!!scaleRes && scaleRes < 10 && scaleRes > 0) {
+            bugout.log("55,0,0,0," + scaleRes);
+            uploadToAWS();
+            $(e.target).unbind("click")
+        }
+        else
+            alert("Please enter a response in the range 1-9");
+    });
 
     function stopTracking() {
         bugout.log("88,0,0,0,0");
@@ -269,7 +286,7 @@ $(document).ready(function () {
     })
 
     $('#enableDebug').on('click', function () {
-        blocOneTrials = [[1, 3, 2, 1, 3], [3, 1, 1, 1, 4]];
-        blocTwoTrials = [[1, 2, 2, 2, 2], [3, 3, 1, 2, 20]];
+        blocOneTrials = [[3, 1, 1, 1, 4]];
+        blocTwoTrials = [[1, 2, 1, 2, 20]];
     })
 });
