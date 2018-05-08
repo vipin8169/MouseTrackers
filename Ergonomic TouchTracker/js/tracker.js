@@ -34,7 +34,7 @@ var startDot;
 var endDot;
 var stopDot;
 var touchIcon = $("#touchIndicator");
-var pnum, blockNum;
+var pnum, blockNum, code, vertical;
 
 $(document).ready(function () {
 
@@ -97,7 +97,8 @@ $(document).ready(function () {
                     var fd = new FormData();
                     var file = new Blob([bugout.output], {type: 'plain/text'});
                     fd.append('key', 'ergonomics/${filename}');
-                    fd.append('file', file, 'filename_p' + pnum.val() + 'b' + blockNum.val() + '.txt');
+                    var filename = 'log_' + pnum.val() + '_' + code.val() + '_b' + blockNum.val() + '_' + vertical + '.txt';
+                    fd.append('file', file, filename);
                     $.ajax({
                         url: 'http://hansoltracker.s3.us-east-2.amazonaws.com/',
                         method: 'post',
@@ -222,6 +223,7 @@ $(document).ready(function () {
     };
 
     var activateBlock = function (activateHorizon) { // 1 for horizon and 2 for vertical
+        code = $("input[name='code']");
         pnum = $("input[name='pNum']");
         blockNum = $("input[name='blockNum']");
         bugout.log("0,0,0," + pnum.val() + "," + blockNum.val());
@@ -249,6 +251,10 @@ $(document).ready(function () {
 
     $('#blockSelect').on('click', '.columns', function () {
         var parentEle = $(event.target).parent();
+        if ($(parentEle).hasClass("horizon"))
+            vertical = 12;
+        else
+            vertical = 21;
         activateBlock($(parentEle).hasClass("horizon"));
         enableTrialButton();
     });
