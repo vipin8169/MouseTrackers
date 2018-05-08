@@ -34,7 +34,7 @@ var startDot;
 var endDot;
 var stopDot;
 var touchIcon = document.getElementById("touchIndicator");
-var targetAreaWidth = 40;
+var targetAreaWidth = 25;
 var pnum, blockNum, code, vertical;
 
 $(document).ready(function () {
@@ -111,7 +111,7 @@ $(document).ready(function () {
         var filename = 'log_' + pnum.val() + '_' + code.val() + '_b' + blockNum.val() + '_' + vertical + '.txt';
         fd.append('file', file, filename);
         $.ajax({
-            url: 'http://hansoltracker.s3.amazonaws.com/',
+            url: 'https://hansoltracker.s3.amazonaws.com/',
             method: 'post',
             data: fd,
             processData: false,        //this...
