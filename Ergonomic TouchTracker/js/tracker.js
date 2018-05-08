@@ -34,6 +34,7 @@ var startDot;
 var endDot;
 var stopDot;
 var touchIcon = $("#touchIndicator");
+var targetAreaWidth = 40;
 var pnum, blockNum, code, vertical;
 
 $(document).ready(function () {
@@ -211,14 +212,19 @@ $(document).ready(function () {
         var orig = e.originalEvent;
         var x = orig.changedTouches[0].pageX;
         var y = orig.changedTouches[0].pageY;
-        $(touchIcon).offset({top: y, left: x});
+        $(touchIcon).offset({top: y - $(touchIcon).height() / 2, left: x - $(touchIcon).width() / 2});
         trackMouseMovement(e);
     }).on("touchend", function (e) {
         e.stopPropagation();
         var targetLoc = stopDot[0].getBoundingClientRect();
         var cursorLocation = e.target.getBoundingClientRect();
-        if ((cursorLocation.left > targetLoc.left && cursorLocation.left < targetLoc.right) || (cursorLocation.right > targetLoc.left && cursorLocation.right < targetLoc.right))
-            if ((cursorLocation.top > targetLoc.top && cursorLocation.top < targetLoc.bottom) || (cursorLocation.bottom > targetLoc.top && cursorLocation.bottom < targetLoc.bottom)) {
+        var smallDot = $(stopDot[0]).width() < 30;    //detect if the dot is small one
+        var left = smallDot ? targetLoc.left : (targetLoc.left + $(stopDot[0]).width() / 2 - targetAreaWidth / 2);
+        var right = smallDot ? targetLoc.right : (targetLoc.right - $(stopDot[0]).width() / 2 + targetAreaWidth / 2);
+        var top = smallDot ? targetLoc.top : (targetLoc.top + $(stopDot[0]).height() / 2 - targetAreaWidth / 2);
+        var bottom = smallDot ? targetLoc.bottom : (targetLoc.bottom - $(stopDot[0]).height() / 2 + targetAreaWidth / 2);
+        if ((cursorLocation.left > left && cursorLocation.left < right) || (cursorLocation.right > left && cursorLocation.right < right))
+            if ((cursorLocation.top > top && cursorLocation.top < bottom) || (cursorLocation.bottom > top && cursorLocation.bottom < bottom)) {
                 $(stopDot).trigger("triggerTouchEnd");
                 if ($(stopDot).get(0) == $(".startDot:visible").get(0))
                     $(touchIcon).addClass("hide");
