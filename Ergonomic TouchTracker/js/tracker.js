@@ -170,8 +170,8 @@ $(document).ready(function () {
 
         var touchLocation = $(".startDot:visible")[0].getBoundingClientRect();
         $(touchIcon).removeClass("hide").offset({
-            top: touchLocation.top + touchLocation.height / 2,
-            left: touchLocation.left + touchLocation.width / 2
+            top: touchLocation.top + touchLocation.height / 2 - $(touchIcon).height() / 2,
+            left: touchLocation.left + touchLocation.width / 2 - $(touchIcon).width() / 2
         });
 
         $(".startDot").attr('src', startDot);
