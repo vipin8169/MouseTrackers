@@ -216,14 +216,13 @@ $(document).ready(function () {
 
     $(touchIcon).bind("touchmove mousedown", function (e) {
         e.preventDefault();
-        var x, y;
         if (e.type == "mousedown") {
             touchIcon.addEventListener('mousemove', mouseMoving)
         }
         else {
-            orig = e.originalEvent;
-            x = orig.changedTouches[0].pageX;
-            y = orig.changedTouches[0].pageY;
+            var orig = e.originalEvent;
+            var x = orig.changedTouches[0].pageX;
+            var y = orig.changedTouches[0].pageY;
             $(touchIcon).offset({top: y - $(touchIcon).height() / 2, left: x - $(touchIcon).width() / 2});
             trackMouseMovement(e);
         }
@@ -260,10 +259,6 @@ $(document).ready(function () {
     };
 
     var activateBlock = function (activateHorizon) { // 1 for horizon and 2 for vertical
-        code = $("input[name='code']");
-        pnum = $("input[name='pNum']");
-        blockNum = $("input[name='blockNum']");
-        bugout.log("0,0,0," + pnum.val() + "," + blockNum.val());
         $('#welcomeMessage').addClass('hide');
         $("#toBeTracked").removeClass('hide');
         if (activateHorizon) {
@@ -287,6 +282,10 @@ $(document).ready(function () {
     };
 
     $('#blockSelect').on('click', '.columns', function () {
+        code = $("input[name='code']");
+        pnum = $("input[name='pNum']");
+        blockNum = $("input[name='blockNum']");
+        bugout.log("0,0,0," + pnum.val() + "," + blockNum.val());
         var parentEle = $(event.target).parent();
         if ($(parentEle).hasClass("horizon"))
             vertical = 12;
