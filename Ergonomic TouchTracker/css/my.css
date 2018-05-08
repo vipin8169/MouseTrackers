@@ -27,7 +27,7 @@ body {
     background-color: red !important;
 }
 
-#horizontal .panel{
+#horizontal .panel {
     display: flex;
     height: 80vh;
     flex-direction: column;
@@ -69,11 +69,11 @@ body {
     justify-content: center;
 }
 
-.fixImg{
+.fixImg {
     height: 125px;
 }
 
-#touchIndicator{
+#touchIndicator {
     position: absolute;
     width: 40px;
     text-align: center;
@@ -81,6 +81,7 @@ body {
     height: 40px;
     line-height: 40px;
 }
-#touchIndicator img{
+
+#touchIndicator img {
     max-width: 24px;
 }
