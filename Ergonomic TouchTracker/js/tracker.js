@@ -19,8 +19,6 @@ var enableConsoleLogging = false;
 var blockCount = 1;
 bugout.autoTrim = false;
 bugout.realTimeLoggingOn = enableConsoleLogging;
-// blocOneTrials = [[1, 2, 2, 1, 1], [2, 1, 1, 1, 2], [1, 3, 2, 1, 3], [3, 1, 1, 1, 4]];
-// blocTwoTrials = [[1, 3, 2, 2, 1], [2, 3, 1, 2, 1], [1, 2, 2, 2, 2], [3, 3, 1, 2, 20]];
 var completeList;
 var redImgPrefix = 'img/red/'; // location of red dots
 var blackImgPrefix = 'img/black/'; // location of black dots
@@ -98,8 +96,8 @@ $(document).ready(function () {
                 else {
                     var fd = new FormData();
                     var file = new Blob([bugout.output], {type: 'plain/text'});
-                    fd.append('key','ergonomics/${filename}');
-                    fd.append('file', file, 'filename_p'+pnum.val()+'b'+blockNum.val()+'.txt');
+                    fd.append('key', 'ergonomics/${filename}');
+                    fd.append('file', file, 'filename_p' + pnum.val() + 'b' + blockNum.val() + '.txt');
                     $.ajax({
                         url: 'http://hansoltracker.s3.us-east-2.amazonaws.com/',
                         method: 'post',
@@ -262,5 +260,10 @@ $(document).ready(function () {
             $(this).html("Disable logging to console");
         else
             $(this).html("Enable logging to console")
+    })
+
+    $('#enableDebug').on('click', function () {
+        blocOneTrials = [[1, 3, 2, 1, 3], [3, 1, 1, 1, 4]];
+        blocTwoTrials = [[1, 2, 2, 2, 2], [3, 3, 1, 2, 20]];
     })
 });
