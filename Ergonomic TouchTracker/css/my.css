@@ -20,7 +20,7 @@ body {
 }
 
 #toBeTracked .nimstim {
-    min-height: 270px;
+    height: 270px;
 }
 
 #startTrial.white {
@@ -29,13 +29,17 @@ body {
 
 #horizontal .panel {
     display: flex;
-    height: 80vh;
+    height: 90vmin;
+    width: 90vmin;
+    margin: 20px auto;
     flex-direction: column;
     justify-content: space-between;
 }
 
 #vertical .panel {
-    height: 90vh;
+    height: 90vmin;
+    width: 90vmin;
+    margin: 20px auto;
 }
 
 #vertical .panel > .row {
@@ -49,7 +53,7 @@ body {
 
 #vertical .panel .row {
     /*display: table;*/
-    width: 100%;
+    /*width: 100%;*/
 }
 
 #vertical .panel > .row .row {
@@ -58,6 +62,7 @@ body {
 
 #vertical .panel .row .columns {
     height: 100%;
+    width: 270px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -88,4 +93,18 @@ body {
 
 #scaleImg {
     margin: 20px 0;
+}
+
+.start {
+    height: 100%;
+    float: left;
+    display: flex;
+    align-items: center;
+    min-width: 125px;
+    justify-content: center;
+}
+
+.end {
+    height: 50% !important;
+    float: right;
 }
