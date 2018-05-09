@@ -30,7 +30,7 @@ body {
 #horizontal .panel {
     display: flex;
     height: 90vmin;
-    width: 90vmin;
+    width: 90vmax;
     margin: 20px auto;
     flex-direction: column;
     justify-content: space-between;
@@ -38,7 +38,7 @@ body {
 
 #vertical .panel {
     height: 90vmin;
-    width: 90vmin;
+    width: 90vmax;
     margin: 20px auto;
 }
 
