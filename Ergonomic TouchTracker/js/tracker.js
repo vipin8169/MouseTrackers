@@ -36,6 +36,7 @@ var stopDot;
 var touchIcon = document.getElementById("touchIndicator");
 var targetAreaWidth = 25;
 var pnum, blockNum, code, vertical;
+var backTrackingEnabled = false, isBackTracking = false;
 
 $(document).ready(function () {
 
@@ -69,11 +70,13 @@ $(document).ready(function () {
     }
 
     function startBackTracking() {
+        isBackTracking = !isBackTracking;
         // $(elementToBeTracked).mousemove(trackMouseMovement);        // enable the mouse coordinate tracking
         var ele = $('#horizontal .startDot');
         if (currentBlock == 2)
             ele = $('#vertical .startDot');
         $(ele).one('triggerTouchEnd', function () {
+            isBackTracking = !isBackTracking;
             startDot = blackImgPrefix + activeTrial[0] + '.png';
             $(ele).attr('src', startDot);
             hideStimuli();
@@ -135,10 +138,12 @@ $(document).ready(function () {
     });
 
     function stopTracking() {
-        bugout.log("88,0,0,0,0");
+        if (backTrackingEnabled)
+            bugout.log("88,0,0,0,0");
         // console.log("----------------uptracking finished----------------");;
         bugout.log(activeTrial + " ");
-        bugout.log("99,0,0,0,0");
+        if (backTrackingEnabled)
+            bugout.log("99,0,0,0,0");
         // console.log("----------------downtracking started----------------");
         $(elementToBeTracked).unbind("mousemove");          // stop the mouse coordinate tracking
         startBackTracking();
@@ -214,7 +219,10 @@ $(document).ready(function () {
         x = event.clientX;
         y = event.clientY;
         $(touchIcon).offset({top: y - $(touchIcon).height() / 2, left: x - $(touchIcon).width() / 2});
-        trackMouseMovement(event);
+        if (backTrackingEnabled)
+            trackMouseMovement(event);
+        else if (!isBackTracking)
+            trackMouseMovement(event);
     }
 
     $(touchIcon).bind("touchmove mousedown", function (e) {
@@ -227,7 +235,10 @@ $(document).ready(function () {
             var x = orig.changedTouches[0].pageX;
             var y = orig.changedTouches[0].pageY;
             $(touchIcon).offset({top: y - $(touchIcon).height() / 2, left: x - $(touchIcon).width() / 2});
-            trackMouseMovement(orig);
+            if (backTrackingEnabled)
+                trackMouseMovement(orig);
+            else if (!isBackTracking)
+                trackMouseMovement(orig);
         }
     }).on("touchend mouseleave mouseup", function (e) {
         touchIcon.removeEventListener("mousemove", mouseMoving);
