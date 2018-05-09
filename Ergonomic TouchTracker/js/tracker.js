@@ -221,11 +221,11 @@ $(document).ready(function () {
             touchIcon.addEventListener('mousemove', mouseMoving)
         }
         else {
-            var orig = e.originalEvent;
+            var orig = e.originalEvent || e;
             var x = orig.changedTouches[0].pageX;
             var y = orig.changedTouches[0].pageY;
             $(touchIcon).offset({top: y - $(touchIcon).height() / 2, left: x - $(touchIcon).width() / 2});
-            trackMouseMovement(e);
+            trackMouseMovement(orig);
         }
     }).on("touchend mouseleave mouseup", function (e) {
         touchIcon.removeEventListener("mousemove", mouseMoving);

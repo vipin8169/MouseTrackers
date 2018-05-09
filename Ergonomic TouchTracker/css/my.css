@@ -108,3 +108,7 @@ body {
     height: 50% !important;
     float: right;
 }
+
+.submitAWS {
+    top: 45px;
+}
