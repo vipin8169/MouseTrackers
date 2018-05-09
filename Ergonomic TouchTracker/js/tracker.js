@@ -36,7 +36,7 @@ var stopDot;
 var touchIcon = document.getElementById("touchIndicator");
 var targetAreaWidth = 25;
 var pnum, blockNum, code, vertical;
-var backTrackingEnabled = false, isBackTracking = false;
+var backTrackingEnabled = false, isBackTracking = false, startDotMediumAlways = true;
 
 $(document).ready(function () {
 
@@ -78,6 +78,8 @@ $(document).ready(function () {
         $(ele).one('triggerTouchEnd', function () {
             isBackTracking = !isBackTracking;
             startDot = blackImgPrefix + activeTrial[0] + '.png';
+            if (startDotMediumAlways)
+                startDot = blackImgPrefix + "2.png";
             $(ele).attr('src', startDot);
             hideStimuli();
             $(elementToBeTracked).unbind("mousemove");          // stop the mouse coordinate tracking
@@ -155,6 +157,8 @@ $(document).ready(function () {
         $(ele).one('triggerTouchEnd', function () {
             startDot = redImgPrefix + activeTrial[0] + '.png';
             endDot = blackImgPrefix + activeTrial[1] + '.png';
+            if (startDotMediumAlways)
+                startDot = redImgPrefix + "2.png";
             $(ele).attr('src', endDot);
             $(".startDot").attr('src', startDot);
             stopTracking();
@@ -174,6 +178,8 @@ $(document).ready(function () {
         var randIndex = Math.floor(Math.random() * completeList.length);    // generate a random integer governed by the length of the array
         var currTrial = completeList[randIndex];                            // get the current trial values based on the random index generated above
         startDot = blackImgPrefix + currTrial[0] + '.png';
+        if (startDotMediumAlways)
+            startDot = blackImgPrefix + "2.png";
         endDot = redImgPrefix + currTrial[1] + '.png';
 
 
