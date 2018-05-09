@@ -29,8 +29,8 @@ body {
 
 #horizontal .panel {
     display: flex;
-    height: 90vmin;
-    width: 90vmax;
+    height: 90vmax;
+    width: 90vmin;
     margin: 20px auto;
     flex-direction: column;
     justify-content: space-between;
