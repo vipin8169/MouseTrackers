@@ -39,6 +39,8 @@ var pnum, blockNum, code, vertical;
 
 $(document).ready(function () {
 
+    document.querySelector('html').className += ("ontouchstart" in window) || window.DocumentTouch && document instanceof DocumentTouch ? ' touch' : ' no-touch';
+
     function trackMouseMovement(event) {
         var eventDoc, doc, body;
         var areaHeight = panelOffsetHeight;

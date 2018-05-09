@@ -27,6 +27,11 @@ body {
     background-color: red !important;
 }
 
+.no-touch .panel {
+    height: 90vh !important;
+    width: 90vh !important;
+}
+
 #horizontal .panel {
     display: flex;
     height: 90vmax;
