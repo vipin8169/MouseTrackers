@@ -33,8 +33,7 @@ var currentBlock;
 var startDot;
 var endDot;
 var stopDot;
-// var touchIcon = document.getElementById("touchIndicator");
-var targetAreaWidth, pnum, blockNum, code, vertical;
+var pnum, blockNum, code, vertical;
 var backTrackingEnabled = false, isBackTracking = false, startDotMediumAlways = true;
 
 $(document).ready(function () {
@@ -57,10 +56,6 @@ $(document).ready(function () {
                 (doc && doc.scrollTop || body && body.scrollTop || 0) -
                 (doc && doc.clientTop || body && body.clientTop || 0 );
         }
-        // else {
-        //     event.pageX = event.target.getBoundingClientRect().x;
-        //     event.pageY = event.target.getBoundingClientRect().y;
-        // }
         var userX = event.pageX - panelOffsetLeft;                   // get the x-coordinate of the user
         var userY = event.pageY - (panelOffsetTop + areaHeight);     // get the y coordinate of the user
         userY *= -1;
@@ -154,7 +149,15 @@ $(document).ready(function () {
     var showImgAndStopTracking = function (ele) {
         $(".trialText").hide();
         $(ele).attr('src', endDot);
-        $(ele).one('mousemove', function () {
+        var targetArea = $("#targetArea");
+        $(ele).load(function () {
+            var dimesnion = $(ele)[0].getBoundingClientRect();
+            $(targetArea).offset({
+                top: dimesnion.top + $(ele).height() / 2 - $(targetArea).height() / 2,
+                left: dimesnion.left + $(ele).width() / 2 - $(targetArea).width() / 2
+            });
+        });
+        $(targetArea).one('mousemove', function () {
             startDot = redImgPrefix + activeTrial[0] + '.png';
             endDot = blackImgPrefix + activeTrial[1] + '.png';
             if (startDotMediumAlways)
@@ -181,13 +184,6 @@ $(document).ready(function () {
         if (startDotMediumAlways)
             startDot = blackImgPrefix + "2.png";
         endDot = redImgPrefix + currTrial[1] + '.png';
-
-
-        // var touchLocation = $(".startDot:visible")[0].getBoundingClientRect();
-        // $(touchIcon).removeClass("hide").offset({
-        //     top: touchLocation.top + touchLocation.height / 2 - $(touchIcon).height() / 2,
-        //     left: touchLocation.left + touchLocation.width / 2 - $(touchIcon).width() / 2
-        // });
 
         $(".startDot").attr('src', startDot);
         activeTrial = currTrial;
@@ -221,54 +217,6 @@ $(document).ready(function () {
         }
     };
 
-    // function mouseMoving(event) {
-    //     x = event.clientX;
-    //     y = event.clientY;
-    //     // $(touchIcon).offset({top: y - $(touchIcon).height() / 2, left: x - $(touchIcon).width() / 2});
-    //     if (backTrackingEnabled)
-    //         trackMouseMovement(event);
-    //     else if (!isBackTracking)
-    //         trackMouseMovement(event);
-    // }
-
-    // $(touchIcon).bind("touchmove mousedown", function (e) {
-    //     e.preventDefault();
-    //     if (e.type == "mousedown") {
-    //         touchIcon.addEventListener('mousemove', mouseMoving)
-    //     }
-    //     else {
-    //         var orig = e.originalEvent || e;
-    //         var x = orig.changedTouches[0].pageX;
-    //         var y = orig.changedTouches[0].pageY;
-    //         $(touchIcon).offset({top: y - $(touchIcon).height() / 2, left: x - $(touchIcon).width() / 2});
-    //         if (backTrackingEnabled)
-    //             trackMouseMovement(orig);
-    //         else if (!isBackTracking)
-    //             trackMouseMovement(orig);
-    //     }
-    // }).on("touchend mouseleave mouseup", function (e) {
-    //     touchIcon.removeEventListener("mousemove", mouseMoving);
-    //     e.stopPropagation();
-    //     var targetLoc = stopDot[0].getBoundingClientRect();
-    //     var cursorLocation = e.target.getBoundingClientRect();
-    //     var smallDot = $(stopDot[0]).width() < 30;    //detect if the dot is small one
-    //     if (isBackTracking)
-    //         targetAreaWidth = 40;
-    //     else
-    //         targetAreaWidth = 25;
-    //     var left = smallDot ? targetLoc.left : (targetLoc.left + $(stopDot[0]).width() / 2 - targetAreaWidth / 2);
-    //     var right = smallDot ? targetLoc.right : (targetLoc.right - $(stopDot[0]).width() / 2 + targetAreaWidth / 2);
-    //     var top = smallDot ? targetLoc.top : (targetLoc.top + $(stopDot[0]).height() / 2 - targetAreaWidth / 2);
-    //     var bottom = smallDot ? targetLoc.bottom : (targetLoc.bottom - $(stopDot[0]).height() / 2 + targetAreaWidth / 2);
-    //     if ((cursorLocation.left > left && cursorLocation.left < right) || (cursorLocation.right > left && cursorLocation.right < right))
-    //         if ((cursorLocation.top > top && cursorLocation.top < bottom) || (cursorLocation.bottom > top && cursorLocation.bottom < bottom)) {
-    //             $(stopDot).trigger("triggerTouchEnd");
-    //             if ($(stopDot).get(0) == $(".startDot:visible").get(0))
-    //                 $(touchIcon).addClass("hide");
-    //             else
-    //                 stopDot = $(".startDot:visible");
-    //         }
-    // });
 
     var enableTrialButton = function () {
         var ele = $('#horizontal .startDot');
@@ -332,5 +280,4 @@ $(document).ready(function () {
         blocOneTrials = [[3, 1, 1, 1, 4]];
         blocTwoTrials = [[1, 2, 1, 2, 20]];
     })
-
 });
