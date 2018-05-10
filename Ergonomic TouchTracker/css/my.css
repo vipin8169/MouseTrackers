@@ -32,7 +32,7 @@ body {
     width: 90vh !important;
 }
 
-#horizontal .panel {
+#horizontal .panel, #vertical .panel {
     display: flex;
     height: 90vmax;
     width: 90vmin;
@@ -41,39 +41,39 @@ body {
     justify-content: space-between;
 }
 
-#vertical .panel {
-    height: 90vmax;
-    width: 90vmin;
-    margin: 30px auto;
-}
+/*#vertical .panel {*/
+/*height: 90vmax;*/
+/*width: 90vmin;*/
+/*margin: 30px auto;*/
+/*}*/
 
-#vertical .panel > .row {
-    height: 100%;
-}
+/*#vertical .panel > .row {*/
+/*height: 100%;*/
+/*}*/
 
-#vertical .panel > .row .columns.targets {
-    display: block;
-    height: 100%;
-}
+/*#vertical .panel > .row .columns.targets {*/
+    /*display: block;*/
+    /*height: 100%;*/
+/*}*/
 
-#vertical .panel .row {
-    /*display: table;*/
-    /*width: 100%;*/
-}
+/*#vertical .panel .row {*/
+    /*!*display: table;*!*/
+    /*!*width: 100%;*!*/
+/*}*/
 
-#vertical .panel > .row .row {
-    height: 50%;
-}
+/*#vertical .panel > .row .row {*/
+    /*height: 50%;*/
+/*}*/
 
-#vertical .panel .row .columns {
-    height: 100%;
-    width: 270px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+/*#vertical .panel .row .columns {*/
+    /*height: 100%;*/
+    /*width: 270px;*/
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
+/*}*/
 
-#horizontal .row .columns {
+#horizontal .row .columns, #vertical .row .columns {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -109,10 +109,10 @@ body {
     justify-content: center;
 }
 
-.end {
-    height: 50% !important;
-    float: right;
-}
+/*.end {*/
+/*height: 50% !important;*/
+/*float: right;*/
+/*}*/
 
 .submitAWS {
     top: 45px;
