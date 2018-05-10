@@ -34,8 +34,7 @@ var startDot;
 var endDot;
 var stopDot;
 var touchIcon = document.getElementById("touchIndicator");
-var targetAreaWidth = 25;
-var pnum, blockNum, code, vertical;
+var targetAreaWidth, pnum, blockNum, code, vertical;
 var backTrackingEnabled = false, isBackTracking = false, startDotMediumAlways = true;
 
 $(document).ready(function () {
@@ -252,6 +251,10 @@ $(document).ready(function () {
         var targetLoc = stopDot[0].getBoundingClientRect();
         var cursorLocation = e.target.getBoundingClientRect();
         var smallDot = $(stopDot[0]).width() < 30;    //detect if the dot is small one
+        if (isBackTracking)
+            targetAreaWidth = 40;
+        else
+            targetAreaWidth = 25;
         var left = smallDot ? targetLoc.left : (targetLoc.left + $(stopDot[0]).width() / 2 - targetAreaWidth / 2);
         var right = smallDot ? targetLoc.right : (targetLoc.right - $(stopDot[0]).width() / 2 + targetAreaWidth / 2);
         var top = smallDot ? targetLoc.top : (targetLoc.top + $(stopDot[0]).height() / 2 - targetAreaWidth / 2);
