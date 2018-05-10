@@ -34,17 +34,17 @@ body {
 
 #horizontal .panel {
     display: flex;
-    height: 90vmax;
-    width: 90vmin;
-    margin: 20px auto;
+    height: 80vmax;
+    width: 80vmin;
+    margin: 50px auto;
     flex-direction: column;
     justify-content: space-between;
 }
 
 #vertical .panel {
-    height: 90vmin;
-    width: 90vmax;
-    margin: 20px auto;
+    height: 80vmin;
+    width: 80vmax;
+    margin: 50px auto;
 }
 
 #vertical .panel > .row {
