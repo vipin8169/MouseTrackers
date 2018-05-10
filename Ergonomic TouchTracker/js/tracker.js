@@ -113,7 +113,7 @@ $(document).ready(function () {
     function uploadToAWS() {
         var fd = new FormData();
         var file = new Blob([bugout.output], {type: 'plain/text'});
-        fd.append('key', 'ergonomics/${filename}');
+        fd.append('key', 'touchtracker/${filename}');
         var filename = 'log_' + pnum.val() + '_' + code.val() + '_b' + blockNum.val() + '_' + vertical + '.txt';
         fd.append('file', file, filename);
         $.ajax({

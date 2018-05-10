@@ -1,0 +1,121 @@
+.success.button {
+    cursor: inherit;
+}
+
+body {
+    /*adding this to ensure the page doesn't refresh on dragging down*/
+    overscroll-behavior: contain;
+}
+
+.panel {
+    margin: 20px;
+    /*height: 100vh;*/
+}
+
+#toBeTracked .nimstim {
+    height: 270px;
+}
+
+#startTrial.white {
+    background-color: red !important;
+}
+
+.no-touch .panel {
+    height: 90vh !important;
+    width: 90vh !important;
+}
+
+#horizontal .panel {
+    display: flex;
+    height: 90vmax;
+    width: 90vmin;
+    margin: 30px auto;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#horizontal .panel .row:first-child {
+    margin: 0;
+}
+
+#horizontal .nimstim {
+    padding: 0;
+}
+
+#vertical .panel {
+    height: 90vmax;
+    width: 90vmin;
+    margin: 30px auto;
+}
+
+#vertical .panel > .row {
+    height: 100%;
+}
+
+#vertical .panel > .row .columns.targets {
+    display: block;
+    height: 100%;
+}
+
+#vertical .panel .row {
+    /*display: table;*/
+    /*width: 100%;*/
+}
+
+#vertical .panel > .row .row {
+    height: 50%;
+}
+
+#vertical .panel .row .columns {
+    height: 100%;
+    width: 270px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#horizontal .row .columns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fixImg {
+    height: 125px;
+}
+
+#touchIndicator {
+    position: absolute;
+    width: 40px;
+    text-align: center;
+    z-index: 10;
+    height: 40px;
+    line-height: 40px;
+}
+
+#touchIndicator img {
+    max-width: 24px;
+}
+
+#scaleImg {
+    margin: 20px 0;
+}
+
+.start {
+    height: 100%;
+    float: left;
+    display: flex;
+    align-items: center;
+    min-width: 125px;
+    justify-content: center;
+}
+
+.end {
+    height: 50% !important;
+    float: right;
+    margin-right: 0px !important;
+}
+
+.submitAWS {
+    top: 45px;
+}

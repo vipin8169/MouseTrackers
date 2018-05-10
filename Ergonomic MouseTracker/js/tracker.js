@@ -33,7 +33,7 @@ var currentBlock;
 var startDot;
 var endDot;
 var stopDot;
-var touchIcon = document.getElementById("touchIndicator");
+// var touchIcon = document.getElementById("touchIndicator");
 var targetAreaWidth, pnum, blockNum, code, vertical;
 var backTrackingEnabled = false, isBackTracking = false, startDotMediumAlways = true;
 
@@ -57,10 +57,10 @@ $(document).ready(function () {
                 (doc && doc.scrollTop || body && body.scrollTop || 0) -
                 (doc && doc.clientTop || body && body.clientTop || 0 );
         }
-        else {
-            event.pageX = event.target.getBoundingClientRect().x;
-            event.pageY = event.target.getBoundingClientRect().y;
-        }
+        // else {
+        //     event.pageX = event.target.getBoundingClientRect().x;
+        //     event.pageY = event.target.getBoundingClientRect().y;
+        // }
         var userX = event.pageX - panelOffsetLeft;                   // get the x-coordinate of the user
         var userY = event.pageY - (panelOffsetTop + areaHeight);     // get the y coordinate of the user
         userY *= -1;
@@ -70,11 +70,12 @@ $(document).ready(function () {
 
     function startBackTracking() {
         isBackTracking = !isBackTracking;
-        // $(elementToBeTracked).mousemove(trackMouseMovement);        // enable the mouse coordinate tracking
+        if (backTrackingEnabled)
+            $(elementToBeTracked).mousemove(trackMouseMovement);        // enable the mouse coordinate tracking
         var ele = $('#horizontal .startDot');
         if (currentBlock == 2)
             ele = $('#vertical .startDot');
-        $(ele).one('triggerTouchEnd', function () {
+        $(ele).one('mousemove', function () {
             isBackTracking = !isBackTracking;
             startDot = blackImgPrefix + activeTrial[0] + '.png';
             if (startDotMediumAlways)
@@ -90,7 +91,7 @@ $(document).ready(function () {
                 // bugout.autoTrim = false;
             }
             if (timesToRepeat <= 0) {
-                $(touchIcon).addClass("hide");
+                // $(touchIcon).addClass("hide");
                 if (beginOtherBlock && blockCount < 2) {
                     blockCount++;
                     $('#welcomeMessage').removeClass('hide');
@@ -113,7 +114,7 @@ $(document).ready(function () {
     function uploadToAWS() {
         var fd = new FormData();
         var file = new Blob([bugout.output], {type: 'plain/text'});
-        fd.append('key', 'touchdragger/${filename}');
+        fd.append('key', 'mousetracker/${filename}');
         var filename = 'log_' + pnum.val() + '_' + code.val() + '_b' + blockNum.val() + '_' + vertical + '.txt';
         fd.append('file', file, filename);
         $.ajax({
@@ -153,7 +154,7 @@ $(document).ready(function () {
     var showImgAndStopTracking = function (ele) {
         $(".trialText").hide();
         $(ele).attr('src', endDot);
-        $(ele).one('triggerTouchEnd', function () {
+        $(ele).one('mousemove', function () {
             startDot = redImgPrefix + activeTrial[0] + '.png';
             endDot = blackImgPrefix + activeTrial[1] + '.png';
             if (startDotMediumAlways)
@@ -182,11 +183,11 @@ $(document).ready(function () {
         endDot = redImgPrefix + currTrial[1] + '.png';
 
 
-        var touchLocation = $(".startDot:visible")[0].getBoundingClientRect();
-        $(touchIcon).removeClass("hide").offset({
-            top: touchLocation.top + touchLocation.height / 2 - $(touchIcon).height() / 2,
-            left: touchLocation.left + touchLocation.width / 2 - $(touchIcon).width() / 2
-        });
+        // var touchLocation = $(".startDot:visible")[0].getBoundingClientRect();
+        // $(touchIcon).removeClass("hide").offset({
+        //     top: touchLocation.top + touchLocation.height / 2 - $(touchIcon).height() / 2,
+        //     left: touchLocation.left + touchLocation.width / 2 - $(touchIcon).width() / 2
+        // });
 
         $(".startDot").attr('src', startDot);
         activeTrial = currTrial;
@@ -195,7 +196,7 @@ $(document).ready(function () {
 
         completeList.splice(randIndex, 1);          // else remove the trial from the trial list
 
-        // $(elementToBeTracked).mousemove(trackMouseMovement);        // enable the mouse coordinate tracking
+        $(elementToBeTracked).mousemove(trackMouseMovement);        // enable the mouse coordinate tracking
         beginOtherBlock = completeList.length <= 0;
 
         if (currentBlock == 1) {
@@ -220,54 +221,54 @@ $(document).ready(function () {
         }
     };
 
-    function mouseMoving(event) {
-        x = event.clientX;
-        y = event.clientY;
-        $(touchIcon).offset({top: y - $(touchIcon).height() / 2, left: x - $(touchIcon).width() / 2});
-        if (backTrackingEnabled)
-            trackMouseMovement(event);
-        else if (!isBackTracking)
-            trackMouseMovement(event);
-    }
+    // function mouseMoving(event) {
+    //     x = event.clientX;
+    //     y = event.clientY;
+    //     // $(touchIcon).offset({top: y - $(touchIcon).height() / 2, left: x - $(touchIcon).width() / 2});
+    //     if (backTrackingEnabled)
+    //         trackMouseMovement(event);
+    //     else if (!isBackTracking)
+    //         trackMouseMovement(event);
+    // }
 
-    $(touchIcon).bind("touchmove mousedown", function (e) {
-        e.preventDefault();
-        if (e.type == "mousedown") {
-            touchIcon.addEventListener('mousemove', mouseMoving)
-        }
-        else {
-            var orig = e.originalEvent || e;
-            var x = orig.changedTouches[0].pageX;
-            var y = orig.changedTouches[0].pageY;
-            $(touchIcon).offset({top: y - $(touchIcon).height() / 2, left: x - $(touchIcon).width() / 2});
-            if (backTrackingEnabled)
-                trackMouseMovement(orig);
-            else if (!isBackTracking)
-                trackMouseMovement(orig);
-        }
-    }).on("touchend mouseleave mouseup", function (e) {
-        touchIcon.removeEventListener("mousemove", mouseMoving);
-        e.stopPropagation();
-        var targetLoc = stopDot[0].getBoundingClientRect();
-        var cursorLocation = e.target.getBoundingClientRect();
-        var smallDot = $(stopDot[0]).width() < 30;    //detect if the dot is small one
-        if (isBackTracking)
-            targetAreaWidth = 40;
-        else
-            targetAreaWidth = 25;
-        var left = smallDot ? targetLoc.left : (targetLoc.left + $(stopDot[0]).width() / 2 - targetAreaWidth / 2);
-        var right = smallDot ? targetLoc.right : (targetLoc.right - $(stopDot[0]).width() / 2 + targetAreaWidth / 2);
-        var top = smallDot ? targetLoc.top : (targetLoc.top + $(stopDot[0]).height() / 2 - targetAreaWidth / 2);
-        var bottom = smallDot ? targetLoc.bottom : (targetLoc.bottom - $(stopDot[0]).height() / 2 + targetAreaWidth / 2);
-        if ((cursorLocation.left > left && cursorLocation.left < right) || (cursorLocation.right > left && cursorLocation.right < right))
-            if ((cursorLocation.top > top && cursorLocation.top < bottom) || (cursorLocation.bottom > top && cursorLocation.bottom < bottom)) {
-                $(stopDot).trigger("triggerTouchEnd");
-                if ($(stopDot).get(0) == $(".startDot:visible").get(0))
-                    $(touchIcon).addClass("hide");
-                else
-                    stopDot = $(".startDot:visible");
-            }
-    });
+    // $(touchIcon).bind("touchmove mousedown", function (e) {
+    //     e.preventDefault();
+    //     if (e.type == "mousedown") {
+    //         touchIcon.addEventListener('mousemove', mouseMoving)
+    //     }
+    //     else {
+    //         var orig = e.originalEvent || e;
+    //         var x = orig.changedTouches[0].pageX;
+    //         var y = orig.changedTouches[0].pageY;
+    //         $(touchIcon).offset({top: y - $(touchIcon).height() / 2, left: x - $(touchIcon).width() / 2});
+    //         if (backTrackingEnabled)
+    //             trackMouseMovement(orig);
+    //         else if (!isBackTracking)
+    //             trackMouseMovement(orig);
+    //     }
+    // }).on("touchend mouseleave mouseup", function (e) {
+    //     touchIcon.removeEventListener("mousemove", mouseMoving);
+    //     e.stopPropagation();
+    //     var targetLoc = stopDot[0].getBoundingClientRect();
+    //     var cursorLocation = e.target.getBoundingClientRect();
+    //     var smallDot = $(stopDot[0]).width() < 30;    //detect if the dot is small one
+    //     if (isBackTracking)
+    //         targetAreaWidth = 40;
+    //     else
+    //         targetAreaWidth = 25;
+    //     var left = smallDot ? targetLoc.left : (targetLoc.left + $(stopDot[0]).width() / 2 - targetAreaWidth / 2);
+    //     var right = smallDot ? targetLoc.right : (targetLoc.right - $(stopDot[0]).width() / 2 + targetAreaWidth / 2);
+    //     var top = smallDot ? targetLoc.top : (targetLoc.top + $(stopDot[0]).height() / 2 - targetAreaWidth / 2);
+    //     var bottom = smallDot ? targetLoc.bottom : (targetLoc.bottom - $(stopDot[0]).height() / 2 + targetAreaWidth / 2);
+    //     if ((cursorLocation.left > left && cursorLocation.left < right) || (cursorLocation.right > left && cursorLocation.right < right))
+    //         if ((cursorLocation.top > top && cursorLocation.top < bottom) || (cursorLocation.bottom > top && cursorLocation.bottom < bottom)) {
+    //             $(stopDot).trigger("triggerTouchEnd");
+    //             if ($(stopDot).get(0) == $(".startDot:visible").get(0))
+    //                 $(touchIcon).addClass("hide");
+    //             else
+    //                 stopDot = $(".startDot:visible");
+    //         }
+    // });
 
     var enableTrialButton = function () {
         var ele = $('#horizontal .startDot');
