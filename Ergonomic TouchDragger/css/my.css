@@ -30,7 +30,6 @@ body {
     height: 90vmax;
     width: 90vmin;
     margin: 30px auto;
-    padding: 1.25rem 0;
     flex-direction: column;
     justify-content: space-between;
 }
@@ -114,6 +113,7 @@ body {
 .end {
     height: 50% !important;
     float: right;
+    margin-right: 0px !important;
 }
 
 .submitAWS {
