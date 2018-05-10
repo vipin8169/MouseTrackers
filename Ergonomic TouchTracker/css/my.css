@@ -12,6 +12,8 @@
 body {
     /*adding this to ensure the page doesn't refresh on dragging down*/
     overscroll-behavior: contain;
+    max-height: 100vh;
+    overflow: hidden;
 }
 
 .panel {
@@ -52,25 +54,25 @@ body {
 /*}*/
 
 /*#vertical .panel > .row .columns.targets {*/
-    /*display: block;*/
-    /*height: 100%;*/
+/*display: block;*/
+/*height: 100%;*/
 /*}*/
 
 /*#vertical .panel .row {*/
-    /*!*display: table;*!*/
-    /*!*width: 100%;*!*/
+/*!*display: table;*!*/
+/*!*width: 100%;*!*/
 /*}*/
 
 /*#vertical .panel > .row .row {*/
-    /*height: 50%;*/
+/*height: 50%;*/
 /*}*/
 
 /*#vertical .panel .row .columns {*/
-    /*height: 100%;*/
-    /*width: 270px;*/
-    /*display: flex;*/
-    /*align-items: center;*/
-    /*justify-content: center;*/
+/*height: 100%;*/
+/*width: 270px;*/
+/*display: flex;*/
+/*align-items: center;*/
+/*justify-content: center;*/
 /*}*/
 
 #horizontal .row .columns, #vertical .row .columns {
