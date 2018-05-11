@@ -41,6 +41,46 @@ $(document).ready(function () {
 
     document.querySelector('html').className += ("ontouchstart" in window) || window.DocumentTouch && document instanceof DocumentTouch ? ' touch' : ' no-touch';
 
+    var $range = $(".js-range-slider"),
+        $input = $(".js-input"),
+        instance,
+        min = 0,
+        max = 9;
+
+    $range.ionRangeSlider({
+        type: "single",
+        min: min,
+        max: max,
+        from: 0,
+        step: 1,
+        grid: true,
+        grid_num: 9,
+        onStart: function (data) {
+            $input.prop("value", data.from);
+        },
+        onChange: function (data) {
+            $input.prop("value", data.from);
+            $(".irs-min").html("Low");
+            $(".irs-max").html("High");
+        }
+    });
+
+    $(".irs-min").html("Low");
+    $(".irs-max").html("High");
+
+    instance = $range.data("ionRangeSlider");
+    $input.on("change keyup", function () {
+        var val = $(this).prop("value");
+        // validate
+        if (val < min) {
+            val = min;
+        } else if (val > max) {
+            val = max;
+        }
+        instance.update({
+            from: val
+        });
+    });
     function trackMouseMovement(event) {
         var eventDoc, doc, body;
         var areaHeight = panelOffsetHeight;
@@ -127,15 +167,15 @@ $(document).ready(function () {
 
     $("#submitToAWS").on("click", function (e) {
         e.preventDefault();
-        var scaleRes = document.querySelector('input[name="scaleRes"]:checked');
-        if (!!scaleRes) {
+        var scaleRes = $(".js-input").val();
+        if (scaleRes > 0 && scaleRes < 10) {
             bugout.log("55,0,0,0," + scaleRes.value);
             uploadToAWS();
             alert("Your response has been submitted.\nThank You!");
             $(e.target).unbind("click")
         }
         else
-            alert("Please choose your response");
+            alert("Please choose a response in the range 1-9");
     });
 
     function stopTracking() {
