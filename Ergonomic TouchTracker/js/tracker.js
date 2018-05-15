@@ -41,6 +41,8 @@ $(document).ready(function () {
 
     document.querySelector('html').className += ("ontouchstart" in window) || window.DocumentTouch && document instanceof DocumentTouch ? ' touch' : ' no-touch';
 
+    document.addEventListener('touchmove', function(e){ e.preventDefault(); });
+
     var $range = $(".js-range-slider"),
         $input = $(".js-input"),
         instance,
@@ -133,6 +135,7 @@ $(document).ready(function () {
                 $(touchIcon).addClass("hide");
                 if (beginOtherBlock && blockCount < 2) {
                     blockCount++;
+                    alert("Rotate the device to begin other block");
                     $('#welcomeMessage').removeClass('hide');
                     $("#toBeTracked").addClass('hide');
                     $('#purpose').addClass('hide');
