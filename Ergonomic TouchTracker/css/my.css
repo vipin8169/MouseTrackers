@@ -127,7 +127,7 @@ body {
 }
 
 #rotateText {
-    font-size: 75px;
+    font-size: 55px;
     text-align: center;
 }
 
@@ -137,4 +137,9 @@ body {
 
 .koreanText {
     font-family: 'Helvetica Neue', 'Helvetica', 'Apple SD Gothic Neo', 'NanumBarunGothic', 'Malgun Gothic', dotum, 'Lucida Grande', sans-serif;
+}
+
+#rotatePrompt.horizon {
+    transform: rotate(-90deg);
+    margin-top: 20vh;
 }

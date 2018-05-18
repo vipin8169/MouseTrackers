@@ -138,6 +138,8 @@ $(document).ready(function () {
                 if (beginOtherBlock && blockCount < 2) {
                     blockCount++;
                     $('#rotatePrompt').removeClass('hide');
+                    if (currentBlock != 1)
+                        $('#rotatePrompt').addClass('horizon');
                     $("#toBeTracked").addClass('hide');
                     $('#purpose').addClass('hide');
                 }
