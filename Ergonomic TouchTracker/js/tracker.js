@@ -41,7 +41,9 @@ $(document).ready(function () {
 
     document.querySelector('html').className += ("ontouchstart" in window) || window.DocumentTouch && document instanceof DocumentTouch ? ' touch' : ' no-touch';
 
-    document.addEventListener('touchmove', function(e){ e.preventDefault(); });
+    document.addEventListener('touchmove', function (e) {
+        e.preventDefault();
+    });
 
     var $range = $(".js-range-slider"),
         $input = $(".js-input"),
@@ -135,13 +137,9 @@ $(document).ready(function () {
                 $(touchIcon).addClass("hide");
                 if (beginOtherBlock && blockCount < 2) {
                     blockCount++;
-                    alert("Rotate the device to begin other block");
-                    $('#welcomeMessage').removeClass('hide');
+                    $('#rotatePrompt').removeClass('hide');
                     $("#toBeTracked").addClass('hide');
                     $('#purpose').addClass('hide');
-                    $('#instructions').html("You just finished block one! Now, take as much rest as you want. In next experiment, your task is to move the cursor to the image of a MALE face if the cursor is a FLOWER and move the cursor to the image of a FEMALE face if the cursor is a SPIDER. You may start when you are ready.");
-                    activateBlock(currentBlock != 1);
-                    $('#blockPrompt').removeClass("hide");
                 }
                 else {
                     $("#cogScale").removeClass("hide");
@@ -152,6 +150,12 @@ $(document).ready(function () {
         });
         enableTrialButton();
     };
+
+    $("#nextBlock").on("click", function () {
+        activateBlock(currentBlock != 1);
+        $('#rotatePrompt').addClass('hide');
+        $('#blockPrompt').removeClass("hide");
+    });
 
     function uploadToAWS() {
         var fd = new FormData();

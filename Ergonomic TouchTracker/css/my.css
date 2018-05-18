@@ -125,3 +125,16 @@ body {
     padding: 10px 0 0;
     margin-top: 30px;
 }
+
+#rotateText {
+    font-size: 75px;
+    text-align: center;
+}
+
+#nextBlock {
+    float: left;
+}
+
+.koreanText {
+    font-family: 'Helvetica Neue', 'Helvetica', 'Apple SD Gothic Neo', 'NanumBarunGothic', 'Malgun Gothic', dotum, 'Lucida Grande', sans-serif;
+}
