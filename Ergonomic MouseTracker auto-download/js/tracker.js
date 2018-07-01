@@ -167,6 +167,7 @@ $(document).ready(function () {
         var scaleRes = $(".js-input").val();
         if (scaleRes > 0 && scaleRes < 10) {
             bugout.log("55,0,0,0," + scaleRes);
+            bugout.logFilename = 'log_' + pnum.val() + '_' + code.val() + '_b' + blockNum.val() + '_' + vertical + '.txt';;
             bugout.downloadLog();
             // uploadToAWS();
             alert("Your response has been submitted.\nThank You!");
