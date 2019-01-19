@@ -21,3 +21,6 @@
 #startTrial.white {
     background-color: red !important;
 }
+#toBeTracked .nimstim img{
+    height: 200px;
+}
