@@ -45,30 +45,28 @@ var blocOneTrials = [[1, 9, 1, 1], [1, 11, 1, 1], [1, 13, 1, 1], [1, 15, 1, 1], 
     [5, 15, 2, 1], [16, 2, 2, 1], [16, 3, 2, 1], [16, 5, 2, 1], [16, 8, 2, 1], [2, 16, 2, 1], [4, 16, 2, 1],
     [6, 16, 2, 1], [8, 16, 2, 1]];
 var activeTrial = [];
+var lastBlock = false;
 var bugout = new debugout();
 bugout.autoTrim = false;
-// blocOneTrials = [[1, 5, 0, 1], [2, 6, 1, 1]];
-// blocOneTrials = [[7, 13, 1, 1], [7, 15, 1, 1], [12, 7, 1, 1], [11, 7, 1, 1]];
-// blocTwoTrials = [[3, 6, 0, 2], [4, 5, 1, 2]];
-// blocTwoTrials = [[11, 3, 2, 2], [13, 3, 2, 2], [16, 3, 2, 2], [4, 10, 2, 2]];
 var completeList = Array.from(blocOneTrials);
+var startingBlock = 1;
 var imgPrefix = 'img/face/'; // location of faces in the local
 var cursors = ["url('img/cursor/spider.cur'), pointer", "url('img/cursor/flower.png'), pointer"]; //spider=0 & flower=1
 var initTime; // to store the initial time for every trial
 var numberOfBlocks = 1;
 // var timesToRepeat = blocOneTrials.length * numberOfBlocks; // repeat the block 10 times
-var timesToRepeat = blocOneTrials.length; // repeat the block 10 times
+var timesToRepeat = completeList.length; // repeat the block 10 times
 
 var elementToBeTracked = $('#toBeTracked');
 var panelOffsetHeight = $('#toBeTracked .panel').height();
 var panelOffsetLeft = $('#toBeTracked .panel').offset().left;
 var panelOffsetTop = $('#toBeTracked .panel').offset().top;
 var timeInterval = [1000, 1250, 1500, 1750];
-var blockTrialsNum = blocOneTrials.length;
+var blockTrialsNum = completeList.length;
 $(document).ready(function () {
 
     // stop the tracking, log the results
-    function stopTracking(event, beginBlock2) {
+    function stopTracking(event, beginOtherBlock) {
         bugout.log("88,0,0,0,0");
         ;
         // console.log("----------------uptracking finished----------------");;
@@ -80,17 +78,18 @@ $(document).ready(function () {
             bugout.log(activeTrial + ',2');                               // log what are we showing to the user
             // console.log("Stimuli= " + activeTrial + ',2');                               // log what are we showing to the user
         }
-        bugout.log("99,0,0,0,0");
+
         // console.log("----------------downtracking started----------------");
         // $(elementToBeTracked).css('cursor', 'auto');        // change the cursor to default
-        $("#left").unbind("mouseenter");                // unbind the mouseenter event from the stimuli, which is binded on line 57
-        $("#right").unbind("mouseenter");               // unbind the mousemove to stop mouse tracking
+        $("#left").unbind("click");                // unbind the mouseenter event from the stimuli, which is binded on line 57
+        $("#right").unbind("click");               // unbind the mousemove to stop mouse tracking
         $(elementToBeTracked).unbind("mousemove");          // stop the mouse coordinate tracking
 
         var randInterval = Math.floor(Math.random() * timeInterval.length);    // generate a random integer governed by the length of the array
+        bugout.log("99,0,0,0," + timeInterval[randInterval]);
         $('#startTrial').text("Wait!").addClass('white');          // change the button text
         setTimeout(function () {
-            startBackTracking(beginBlock2);
+            startBackTracking(beginOtherBlock);
             if (timesToRepeat > 0) {
                 enableTrialButton();                    // enable the trial button again after 500ms
             }
@@ -102,7 +101,7 @@ $(document).ready(function () {
             // }, 500);
         }
         else {
-            if (beginBlock2) {                          // timesToRepeat = 0 and the currTrial[3] == 1 defines the end of block 1
+            if (beginOtherBlock) {                          // timesToRepeat = 0 and the currTrial[3] == 1 defines the end of block 1
                 // $('#welcomeMessage').removeClass('hide');
                 // $(elementToBeTracked).addClass('hide');
                 // $('#purpose').addClass('hide');
@@ -119,7 +118,7 @@ $(document).ready(function () {
         }
     }
 
-    function startBackTracking(beginBlock2) {
+    function startBackTracking(beginOtherBlock) {
         $(elementToBeTracked).mousemove(trackMouseMovement);        // enable the mouse coordinate tracking
         $('#startTrial').text("Come back!").removeClass('white');
         $('#startTrial').bind('mousemove', function () {
@@ -133,21 +132,32 @@ $(document).ready(function () {
                 bugout.autoTrim = false;
             }
             if (timesToRepeat <= 0) {
-                if (beginBlock2) {
+                if (beginOtherBlock && !lastBlock) {
                     $('#welcomeMessage').removeClass('hide');
                     $(elementToBeTracked).addClass('hide');
                     $('#purpose').addClass('hide');
-                    $('#instructions').html("You just finished block one! Now, take as much rest as you want. In next experiment, your task is to move the cursor to the image of a BLACK face if the cursor is a FLOWER and move the cursor to the image of a WHITE face if the cursor is a SPIDER. You may start when you are ready.");
+                    $('#instructions').html("You just finished one block! Now, take as much rest as you want. In next experiment, your task is to move the cursor to the image of a BLACK face if the cursor is a FLOWER and move the cursor to the image of a WHITE face if the cursor is a SPIDER. You may start when you are ready.");
                     // enableTrialButton();
-                    completeList = Array.from(blocTwoTrials);
-                    timesToRepeat = blocTwoTrials.length;
+                    $(".block1").hide();
+                    $(".block2").hide();
+                    lastBlock = true;
+                    if (startingBlock == 1) {
+                        $(".success.button").html("Click to begin second block").addClass("block2");
+                        completeList = Array.from(blocTwoTrials);
+                    }
+                    else {
+                        $(".success.button").html("Click to begin first block").addClass("block1");
+                        completeList = Array.from(blocOneTrials);
+                    }
+                    timesToRepeat = completeList.length;
                     $('.nimstim img').attr('src', 'img/pic1.png');
                     bugout.downloadLog();
                     bugout = new debugout();
                     bugout.autoTrim = false;
-                    blockTrialsNum = blocTwoTrials.length;
+                    blockTrialsNum = completeList.length;
                 }
                 else {
+                    bugout.log("End of data");
                     bugout.downloadLog();
                     $('#startTrial').text('End of Trials!').removeClass('white');    // say that the trials are ended
                 }
@@ -191,11 +201,11 @@ $(document).ready(function () {
         $(elementToBeTracked).mousemove(trackMouseMovement);        // enable the mouse coordinate tracking
         // $('#left').mouseenter(false, stopTracking);              // stop the tracking once one of the stimuli is selected
         // $('#right').mouseenter(false, stopTracking);
-        var blockOneGoing = currTrial[3] == 1;
-        $('#left').bind('mouseenter', function () {
+        var blockOneGoing = currTrial[3] == startingBlock;
+        $('#left').bind('click', function () {
             stopTracking(event, blockOneGoing)
         });            // stop the tracking once one of the stimuli is selected
-        $('#right').bind('mouseenter', function () {
+        $('#right').bind('click', function () {
             stopTracking(event, blockOneGoing)
         });            // stop the tracking once one of the stimuli is selected
         // $('#startTrial').text("Start Trial!").removeClass('white');
@@ -239,6 +249,20 @@ $(document).ready(function () {
     $('#welcomeMessage').on('click', '.success.button', function () {
         $('#welcomeMessage').addClass('hide');
         $(elementToBeTracked).removeClass('hide');
+        if (event.target.classList.contains("block1")) {
+            completeList = Array.from(blocOneTrials);
+            startingBlock = 1;
+        }
+        else {
+            completeList = Array.from(blocTwoTrials);
+            startingBlock = 2;
+        }
         enableTrialButton();
     });
+    $('#enableDebug').bind('click', function () {
+        blocOneTrials = [[7, 13, 1, 1], [7, 15, 1, 1], [12, 7, 1, 1], [11, 7, 1, 1]];
+        blocTwoTrials = [[11, 3, 2, 2], [13, 3, 2, 2], [16, 3, 2, 2], [4, 10, 2, 2]];
+        timesToRepeat = blocOneTrials.length; // repeat the block 10 times
+        blockTrialsNum = blocOneTrials.length;
+    })
 });
