@@ -186,7 +186,7 @@ $(document).ready(function () {
 
         // change the cursor to be shown
         if (currTrial[2] >= 0)
-            $(elementToBeTracked).css('cursor', cursors[currTrial[2]]);
+            $(elementToBeTracked).css('cursor', cursors[currTrial[2] - 1]);
         // $('#left').hide().attr('src', leftFace);
         // $('#right').hide().attr('src', rightFace);
         // $('#left').slideDown();
