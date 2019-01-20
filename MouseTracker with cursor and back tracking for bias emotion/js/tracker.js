@@ -50,6 +50,7 @@ var bugout = new debugout();
 bugout.autoTrim = false;
 var completeList = Array.from(blocOneTrials);
 var startingBlock = 1;
+var pid;
 var imgPrefix = 'img/face/'; // location of faces in the local
 var cursors = ["url('img/cursor/spider.cur'), pointer", "url('img/cursor/flower.png'), pointer"]; //spider=0 & flower=1
 var initTime; // to store the initial time for every trial
@@ -127,9 +128,9 @@ $(document).ready(function () {
             $(this).unbind("mousemove");                // remove the click functionality from the start button, until one of the stimuli is selected
             $(elementToBeTracked).unbind("mousemove");          // stop the mouse coordinate tracking
             if (timesToRepeat == blockTrialsNum / 2) {
-                bugout.downloadLog();
-                bugout = new debugout();
-                bugout.autoTrim = false;
+                // bugout.downloadLog();
+                // bugout = new debugout();
+                // bugout.autoTrim = false;
             }
             if (timesToRepeat <= 0) {
                 if (beginOtherBlock && !lastBlock) {
@@ -151,13 +152,14 @@ $(document).ready(function () {
                     }
                     timesToRepeat = completeList.length;
                     $('.nimstim img').attr('src', 'img/pic1.png');
-                    bugout.downloadLog();
-                    bugout = new debugout();
-                    bugout.autoTrim = false;
+                    // bugout.downloadLog();
+                    // bugout = new debugout();
+                    // bugout.autoTrim = false;
                     blockTrialsNum = completeList.length;
                 }
                 else {
                     bugout.log("End of data");
+                    bugout.logFilename = pid + "_tracker.txt";
                     bugout.downloadLog();
                     $('#startTrial').text('End of Trials!').removeClass('white');    // say that the trials are ended
                 }
@@ -247,6 +249,12 @@ $(document).ready(function () {
     }
 
     $('#welcomeMessage').on('click', '.success.button', function () {
+        if (!pid)
+            pid = $("#pid")[0].value;
+        if (!pid)
+            pid = "pid_undefined";
+        $('#enableDebug').hide();
+        $("#pid").parent().hide();
         $('#welcomeMessage').addClass('hide');
         $(elementToBeTracked).removeClass('hide');
         if (event.target.classList.contains("block1")) {
@@ -260,8 +268,8 @@ $(document).ready(function () {
         enableTrialButton();
     });
     $('#enableDebug').bind('click', function () {
-        blocOneTrials = [[7, 13, 1, 1], [7, 15, 1, 1], [12, 7, 1, 1], [11, 7, 1, 1]];
-        blocTwoTrials = [[11, 3, 2, 2], [13, 3, 2, 2], [16, 3, 2, 2], [4, 10, 2, 2]];
+        blocOneTrials = [[12, 7, 1, 1], [11, 7, 1, 1]];
+        blocTwoTrials = [[11, 3, 2, 2], [4, 10, 2, 2]];
         timesToRepeat = blocOneTrials.length; // repeat the block 10 times
         blockTrialsNum = blocOneTrials.length;
     })
