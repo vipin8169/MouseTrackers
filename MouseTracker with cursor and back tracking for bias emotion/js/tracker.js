@@ -52,7 +52,7 @@ var completeList = Array.from(blocOneTrials);
 var startingBlock = 1;
 var pid;
 var imgPrefix = 'img/face/'; // location of faces in the local
-var cursors = ["url('img/cursor/spider.cur'), pointer", "url('img/cursor/flower.png'), pointer"]; //spider=0 & flower=1
+var cursors = ["url('img/cursor/flower.png'), pointer", "url('img/cursor/spider.cur'), pointer"]; //spider=0 & flower=1
 var initTime; // to store the initial time for every trial
 var numberOfBlocks = 1;
 // var timesToRepeat = blocOneTrials.length * numberOfBlocks; // repeat the block 10 times
@@ -121,11 +121,11 @@ $(document).ready(function () {
 
     function startBackTracking(beginOtherBlock) {
         $(elementToBeTracked).mousemove(trackMouseMovement);        // enable the mouse coordinate tracking
-        $('#startTrial').text("Come back!").removeClass('white');
-        $('#startTrial').bind('mousemove', function () {
-            $('#startTrial').text("Start Trial!").removeClass('white');
+        $('#startTrial').text("Retrieve").removeClass('white');
+        $('#startTrial').bind('click', function () {
+            $('#startTrial').text("Start the trial").removeClass('white');
             $(elementToBeTracked).css('cursor', 'auto');        // change the cursor to default
-            $(this).unbind("mousemove");                // remove the click functionality from the start button, until one of the stimuli is selected
+            $(this).unbind("click");                // remove the click functionality from the start button, until one of the stimuli is selected
             $(elementToBeTracked).unbind("mousemove");          // stop the mouse coordinate tracking
             if (timesToRepeat == blockTrialsNum / 2) {
                 // bugout.downloadLog();
@@ -182,9 +182,9 @@ $(document).ready(function () {
         if (currTrial[2] == -1)
             $('#startTrial').text("Drag the cursor to one of the photos");
         else if (currTrial[2] == 0)
-            $('#startTrial').text("Drag the spider to one of the photos");
+            $('#startTrial').text("Go!");
         else if (currTrial[2] == 1)
-            $('#startTrial').text("Drag the flower to one of the photos");
+            $('#startTrial').text("Go!");
 
         // change the cursor to be shown
         if (currTrial[2] >= 0)
