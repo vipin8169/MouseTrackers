@@ -92,7 +92,7 @@ $(document).ready(function () {
         setTimeout(function () {
             startBackTracking(beginOtherBlock);
             if (timesToRepeat > 0) {
-                enableTrialButton();                    // enable the trial button again after 500ms
+                // enableTrialButton();                    // enable the trial button again after 500ms
             }
         }, timeInterval[randInterval]);
 
@@ -127,6 +127,7 @@ $(document).ready(function () {
             $(elementToBeTracked).css('cursor', 'auto');        // change the cursor to default
             $(this).unbind("click");                // remove the click functionality from the start button, until one of the stimuli is selected
             $(elementToBeTracked).unbind("mousemove");          // stop the mouse coordinate tracking
+            enableTrialButton();                    // enable the trial button again after 500ms
             if (timesToRepeat == blockTrialsNum / 2) {
                 // bugout.downloadLog();
                 // bugout = new debugout();
