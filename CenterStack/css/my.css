@@ -1,0 +1,13 @@
+.success.button {
+    cursor: inherit;
+}
+
+body {
+    /*adding this to ensure the page doesn't refresh on dragging down*/
+    overscroll-behavior: contain;
+}
+
+
+.large-font {
+    font-size: 75px;
+}
