@@ -7,14 +7,15 @@
     <link rel="stylesheet" href="css/foundation.min.css"/>
     <link rel="stylesheet" href="css/foundation-icons/foundation-icons.css"/>
     <link rel="stylesheet" href="css/my.css"/>
-<!--    <link rel="stylesheet" href="css/ion.rangeSlider.css"/>-->
-<!--    <link rel="stylesheet" href="css/ion.rangeSlider.skinHTML5.css"/>-->
+    <link rel="stylesheet" href="css/jquery.rotaryswitch.css"/>
+    <!--    <link rel="stylesheet" href="css/ion.rangeSlider.css"/>-->
+    <!--    <link rel="stylesheet" href="css/ion.rangeSlider.skinHTML5.css"/>-->
     <script src="js/vendor/modernizr.js"></script>
 </head>
 <body>
 
 <form action="#" class="row">
-    <div class="columns small-2">&nbsp;
+    <div class="columns small-1">&nbsp;
     </div>
     <div class="columns small-2 text-center">
         Part No. <input type="text" name="pnum" maxlength="3"><br>
@@ -28,20 +29,20 @@
     <div class="columns small-2 text-center">
         Condition <input type="text" name="condition"><br>
     </div>
+    <div class="columns small-1">&nbsp;
+    </div>
 </form>
-<div class="row">
-    <div class="columns small-2">&nbsp;
+<div class="row controls">
+    <div class="columns small-2 text-center">
+        <img src="img/play.png">
     </div>
-    <div class="columns small-2 text-center large-font">
-        <i class="fi-play style3"></i>
+    <div class="columns small-2 text-center">
+        <img src="img/pause.png">
     </div>
-    <div class="columns small-2 text-center large-font">
-        <i class="fi-pause style3 general"></i>
+    <div class="columns small-2 text-center">
+        <img src="img/stop.png">
     </div>
-    <div class="columns small-2 text-center large-font">
-        <i class="fi-stop style3"></i>
-    </div>
-    <div class="columns small-4 text-center">Time here (s)
+    <div class="columns small-6 text-center time-lapse">00:00
     </div>
 </div>
 
@@ -52,7 +53,20 @@
         <img src="img/button.jpg">
     </div>
     <div class="small-6 columns text-center">
-        <img src="img/button.jpg">
+        <div class="rotaryswitchPlugin defaultTheme"><input type="text" class="rotarySwitch3a" value="0"
+                                                            style="display: none;">
+            <div class="switch" style="transform: rotate(270deg);"></div>
+            <div class="overlay"></div>
+            <div class="marks">
+                <div class="mark" style="transform: rotate(225deg) translate(0px, -30.6px);left: 25%; top: 80%"></div>
+                <div class="mark" style="transform: rotate(270deg) translate(0px, -30.6px);left: 9%; top: 50%"></div>
+                <div class="mark" style="transform: rotate(315deg) translate(0px, -30.6px);left: 20%; top: 18%"></div>
+                <div class="mark" style="transform: rotate(360deg) translate(0px, -30.6px);left: 49%; top: 6%"></div>
+                <div class="mark" style="transform: rotate(45deg) translate(0px, -30.6px);left: 78%; top: 18%"></div>
+                <div class="mark" style="transform: rotate(90deg) translate(0px, -30.6px);left: 90%; top: 50%"></div>
+                <div class="mark" style="transform: rotate(135deg) translate(0px, -30.6px);left: 73%; top: 80%"></div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -61,6 +75,7 @@
 
 <script src="js/vendor/jquery.js"></script>
 <script src="js/foundation.min.js"></script>
+<script src="js/jquery.rotaryswitch.js"></script>
 <!--<script src="js/vendor/ion.rangeSlider.min.js"></script>-->
 <script src="js/debugout.js"></script>
 <script src="js/tracker.js"></script>

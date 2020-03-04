@@ -8,6 +8,11 @@ body {
 }
 
 
-.large-font {
+.controls{
+    line-height: 100%;
+}
+
+.time-lapse{
     font-size: 75px;
+    line-height: 100px;
 }
