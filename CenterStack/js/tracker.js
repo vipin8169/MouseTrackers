@@ -20,6 +20,7 @@ var startTime;
 var timeInterval;
 var knobValue = $("#knob-value");
 var clock = $("#time-lapse");
+var timeLog;
 
 $(document).ready(function () {
 
@@ -41,7 +42,7 @@ $(document).ready(function () {
     $("#play").on('click', function () {
         startTime = new Date();
         bugout.log("0,0,77");
-        var timeLog = 0;
+        timeLog = 0;
         timeInterval = setInterval(function () {
             timeLog++;
             var now = new Date();
@@ -53,7 +54,7 @@ $(document).ready(function () {
             else
                 timeLapseString = timeLapsed.toISOString().substr(14, 5);
             $(clock).html(timeLapseString);
-            bugout.log(timeLog + "," + $(knobValue).html().toString() + "," + 0);
+            bugout.log(timeLog + "," + $(knobValue).html().toString() + ",0");
         }, 1000)
     });
 
@@ -62,7 +63,10 @@ $(document).ready(function () {
     });
 
     $("#stop").on('click', function () {
-
+        clearInterval(timeInterval);
+        bugout.log(timeLog + "," + $(knobValue).html().toString() + ",99");
+        timeLog = 0;
+        // save and download the data below
     });
 
     function uploadToAWS() {
