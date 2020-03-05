@@ -58,7 +58,7 @@ $(document).ready(function () {
             bugout.log(diffTimeLog + "," + $(knobValue).html().toString() + ",89");
         }
 
-        timeInterval = setInterval(startOresumeTime, 1000);
+        timeInterval = setInterval(startOresumeTime, 10); // poll every 10ms
     });
 
     var startOresumeTime = function () {
