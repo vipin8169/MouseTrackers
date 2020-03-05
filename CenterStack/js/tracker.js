@@ -1,24 +1,9 @@
-var blocTwoTrials = [[1, 1, 1, 2, 1], [1, 1, 1, 2, 2], [1, 1, 1, 2, 3], [1, 1, 2, 2, 1], [1, 1, 2, 2, 2], [1, 1, 2, 2, 3], [1, 2, 1, 2, 1], [1, 2, 1, 2, 2],
-    [1, 2, 1, 2, 3], [1, 2, 2, 2, 1], [1, 2, 2, 2, 2], [1, 2, 2, 2, 3], [1, 3, 1, 2, 1], [1, 3, 1, 2, 2], [1, 3, 1, 2, 3], [1, 3, 2, 2, 1], [1, 3, 2, 2, 2],
-    [1, 3, 2, 2, 3], [2, 1, 1, 2, 1], [2, 1, 1, 2, 2], [2, 1, 1, 2, 3], [2, 1, 2, 2, 1], [2, 1, 2, 2, 2], [2, 1, 2, 2, 3], [2, 2, 1, 2, 1], [2, 2, 1, 2, 2],
-    [2, 2, 1, 2, 3], [2, 2, 2, 2, 1], [2, 2, 2, 2, 2], [2, 2, 2, 2, 3], [2, 3, 1, 2, 1], [2, 3, 1, 2, 2], [2, 3, 1, 2, 3], [2, 3, 2, 2, 1], [2, 3, 2, 2, 2],
-    [2, 3, 2, 2, 3], [3, 1, 1, 2, 1], [3, 1, 1, 2, 2], [3, 1, 1, 2, 3], [3, 1, 2, 2, 1], [3, 1, 2, 2, 2], [3, 1, 2, 2, 3], [3, 2, 1, 2, 1], [3, 2, 1, 2, 2],
-    [3, 2, 1, 2, 3], [3, 2, 2, 2, 1], [3, 2, 2, 2, 2], [3, 2, 2, 2, 3], [3, 3, 1, 2, 1], [3, 3, 1, 2, 2], [3, 3, 1, 2, 3], [3, 3, 2, 2, 1], [3, 3, 2, 2, 2],
-    [3, 3, 2, 2, 3]];
-var blocOneTrials = [[1, 1, 1, 1, 1], [1, 1, 1, 1, 2], [1, 1, 1, 1, 3], [1, 1, 2, 1, 1], [1, 1, 2, 1, 2], [1, 1, 2, 1, 3], [1, 2, 1, 1, 1], [1, 2, 1, 1, 2],
-    [1, 2, 1, 1, 3], [1, 2, 2, 1, 1], [1, 2, 2, 1, 2], [1, 2, 2, 1, 3], [1, 3, 1, 1, 1], [1, 3, 1, 1, 2], [1, 3, 1, 1, 3], [1, 3, 2, 1, 1], [1, 3, 2, 1, 2],
-    [1, 3, 2, 1, 3], [2, 1, 1, 1, 1], [2, 1, 1, 1, 2], [2, 1, 1, 1, 3], [2, 1, 2, 1, 1], [2, 1, 2, 1, 2], [2, 1, 2, 1, 3], [2, 2, 1, 1, 1], [2, 2, 1, 1, 2],
-    [2, 2, 1, 1, 3], [2, 2, 2, 1, 1], [2, 2, 2, 1, 2], [2, 2, 2, 1, 3], [2, 3, 1, 1, 1], [2, 3, 1, 1, 2], [2, 3, 1, 1, 3], [2, 3, 2, 1, 1], [2, 3, 2, 1, 2],
-    [2, 3, 2, 1, 3], [3, 1, 1, 1, 1], [3, 1, 1, 1, 2], [3, 1, 1, 1, 3], [3, 1, 2, 1, 1], [3, 1, 2, 1, 2], [3, 1, 2, 1, 3], [3, 2, 1, 1, 1], [3, 2, 1, 1, 2],
-    [3, 2, 1, 1, 3], [3, 2, 2, 1, 1], [3, 2, 2, 1, 2], [3, 2, 2, 1, 3], [3, 3, 1, 1, 1], [3, 3, 1, 1, 2], [3, 3, 1, 1, 3], [3, 3, 2, 1, 1], [3, 3, 2, 1, 2],
-    [3, 3, 2, 1, 3]];
 var bugout = new debugout();
 var enableConsoleLogging = true;
 bugout.autoTrim = false;
 bugout.realTimeLoggingOn = enableConsoleLogging;
 var startTime;
-var resumeTime = new Date();
-var pauseTime = new Date();
+var timeBeforePause = 0;
 var timeInterval;
 var knobValue = $("#knob-value");
 var clock = $("#time-lapse");
@@ -26,9 +11,7 @@ var timeLog;
 var paused = false;
 
 $(document).ready(function () {
-
     // document.querySelector('html').className += ("ontouchstart" in window) || window.DocumentTouch && document instanceof DocumentTouch ? ' touch' : ' no-touch';
-
     var knob = $(".rotarySwitch").rotaryswitch({
         minimum: 1,
         maximum: 7,
@@ -47,12 +30,11 @@ $(document).ready(function () {
     });
 
     $("#play").on('click', function () {
+        startTime = new Date();
         if (!paused) {
-            startTime = new Date();
             bugout.log("0,0,77");
             timeLog = 0;
         } else {
-            resumeTime = new Date();
             bugout.log(timeLog + "," + $(knobValue).html().toString() + ",89");
         }
 
@@ -62,7 +44,7 @@ $(document).ready(function () {
     var startOresumeTime = function () {
         timeLog++;
         var now = new Date();
-        var diff = (now - startTime) + (pauseTime - resumeTime);
+        var diff = (now - startTime) + timeBeforePause;
         var timeLapsed = new Date(diff);
         var hours = Math.floor((timeLapsed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var timeLapseString = "";
@@ -76,7 +58,8 @@ $(document).ready(function () {
 
     $("#pause").on('click', function () {
         paused = true;
-        pauseTime = new Date();
+        var now = new Date();
+        timeBeforePause += now - startTime;
         clearInterval(timeInterval);
         bugout.log(timeLog + "," + $(knobValue).html().toString() + ",88");
     });
