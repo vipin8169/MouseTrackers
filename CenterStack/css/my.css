@@ -7,18 +7,22 @@ body {
     overscroll-behavior: contain;
 }
 
+form.row{
+    margin: 50px auto;
+}
 
 .controls {
     line-height: 100%;
+    margin: 75px auto;
 }
 
 .time-lapse {
-    font-size: 75px;
+    font-size: 100px;
     line-height: 100px;
     font-family: digital;
 }
 
-.knob-value {
+#knob-value {
     font-size: 75px;
     border: 2px solid;
     border-radius: 20px;
@@ -28,6 +32,11 @@ body {
 
 .marginTop {
     margin-top: 75px;
+}
+
+.fixToBottom{
+    bottom: 150px;
+    position: absolute;
 }
 
 @font-face {

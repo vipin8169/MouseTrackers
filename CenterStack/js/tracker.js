@@ -30,6 +30,7 @@ $(document).ready(function () {
     });
 
     knob.on('change', function () {
+        $("#knob-value").html(this.value);
         // console.log(this.value);
     });
 
@@ -53,13 +54,13 @@ $(document).ready(function () {
         var scaleRes = $(".js-input").val();
         if (scaleRes > 0 && scaleRes < 10) {
             bugout.log("55,0,0,0," + scaleRes);
-            bugout.logFilename = 'log_' + pnum.val() + '_' + code.val() + '_b' + blockNum.val() + '_' + vertical + '.txt';;
+            bugout.logFilename = 'log_' + pnum.val() + '_' + code.val() + '_b' + blockNum.val() + '_' + vertical + '.txt';
+            ;
             bugout.downloadLog();
             // uploadToAWS();
             alert("Your response has been submitted.\nThank You!");
             $(e.target).unbind("click")
-        }
-        else
+        } else
             alert("Please choose a response in the range 1-9");
     });
 

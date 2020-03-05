@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>MouseTracker | Welcome</title>
-    <link rel="stylesheet" href="css/foundation.min.css"/>
+    <link rel="stylesheet" href="css/foundation.css"/>
     <link rel="stylesheet" href="css/foundation-icons/foundation-icons.css"/>
     <link rel="stylesheet" href="css/my.css"/>
     <link rel="stylesheet" href="css/jquery.rotaryswitch.css"/>
@@ -46,20 +46,21 @@
 
 <hr/>
 
-<div class="row marginTop">
+<div class="row marginTop fixToBottom">
     <div class="small-6 small-offset-6 columns text-center">
-        <span class="knob-value">4</span>
+        <span id="knob-value">4</span>
     </div>
+<!--    <div class="row marginTop">-->
+        <div class="small-6 marginTop columns text-center">
+            <img src="img/button.jpg">
+        </div>
+        <div class="small-6 columns marginTop text-center">
+            <input type="text" class="rotarySwitch" value="4">
+        </div>
+<!--    </div>-->
 </div>
 
-<div class="row marginTop">
-    <div class="small-6 columns text-center">
-        <img src="img/button.jpg">
-    </div>
-    <div class="small-6 columns text-center">
-        <input type="text" class="rotarySwitch" value="4">
-    </div>
-</div>
+
 
 <input type="button" id="logDownload" class="hide" value="Download log" onClick="bugout.downloadLog()">
 <!--<div id="curve_chart" style="width: 900px; height: 500px"></div>-->
