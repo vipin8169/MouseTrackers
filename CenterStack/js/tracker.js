@@ -16,6 +16,10 @@ var bugout = new debugout();
 var enableConsoleLogging = true;
 bugout.autoTrim = false;
 bugout.realTimeLoggingOn = enableConsoleLogging;
+var startTime;
+var timeInterval;
+var knobValue = $("#knob-value");
+var clock = $("#time-lapse");
 
 $(document).ready(function () {
 
@@ -30,8 +34,35 @@ $(document).ready(function () {
     });
 
     knob.on('change', function () {
-        $("#knob-value").html(this.value);
+        $(knobValue).html(this.value);
         // console.log(this.value);
+    });
+
+    $("#play").on('click', function () {
+        startTime = new Date();
+        bugout.log("0,0,77");
+        var timeLog = 0;
+        timeInterval = setInterval(function () {
+            timeLog++;
+            var now = new Date();
+            var timeLapsed = new Date(now - startTime);
+            var hours = Math.floor((timeLapsed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var timeLapseString = "";
+            if (hours > 0)
+                timeLapseString = timeLapsed.toISOString().substr(11, 8);
+            else
+                timeLapseString = timeLapsed.toISOString().substr(14, 5);
+            $(clock).html(timeLapseString);
+            bugout.log(timeLog + "," + $(knobValue).html().toString() + "," + 0);
+        }, 1000)
+    });
+
+    $("#pause").on('click', function () {
+
+    });
+
+    $("#stop").on('click', function () {
+
     });
 
     function uploadToAWS() {
@@ -71,10 +102,5 @@ $(document).ready(function () {
             $(this).html("Disable logging to console");
         else
             $(this).html("Enable logging to console")
-    })
-
-    $('#enableDebug').on('click', function () {
-        blocOneTrials = [[3, 1, 1, 1, 4]];
-        blocTwoTrials = [[1, 2, 1, 2, 20]];
     })
 });
