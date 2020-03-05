@@ -9,6 +9,7 @@ var knobValue = $("#knob-value");
 var clock = $("#time-lapse");
 var timeLog;
 var paused = false;
+var pnum, blockNum, initial, condition;
 
 $(document).ready(function () {
     // document.querySelector('html').className += ("ontouchstart" in window) || window.DocumentTouch && document instanceof DocumentTouch ? ' touch' : ' no-touch';
@@ -39,6 +40,12 @@ $(document).ready(function () {
         }
 
         timeInterval = setInterval(startOresumeTime, 1000);
+    }).one('click', function () {
+        pnum = $("input[name='pNum']");
+        blockNum = $("input[name='blockNum']");
+        initial = $("input[name='initial']");
+        condition = $("input[name='condition']");
+        bugout.log(pnum.val() + "," + blockNum.val() + "," + condition.val());
     });
 
     var startOresumeTime = function () {
@@ -69,37 +76,25 @@ $(document).ready(function () {
         bugout.log(timeLog + "," + $(knobValue).html().toString() + ",99");
         timeLog = 0;
         // save and download the data below
+        uploadToAWS();
     });
 
     function uploadToAWS() {
         var fd = new FormData();
         var file = new Blob([bugout.output], {type: 'plain/text'});
-        fd.append('key', 'mousetracker/${filename}');
-        var filename = 'log_' + pnum.val() + '_' + code.val() + '_b' + blockNum.val() + '_' + vertical + '.txt';
+        fd.append('key', 'centrestack/${filename}');
+        var now = new Date();
+        now = now.toISOString().substring(0, 10).split("-").join("");
+        var filename = 'P' + pnum.val() + '_' + initial.val() + '_' + blockNum.val() + '_' + condition.val() + "_" + now + '.txt';
         fd.append('file', file, filename);
         $.ajax({
-            url: 'https://hansoltracker.s3.amazonaws.com/',
+            url: 'https://gameexperiencesurvey.s3.amazonaws.com/',
             method: 'post',
             data: fd,
             processData: false,        //this...
             contentType: false         //and this is for formData type
         });
     }
-
-    $("#submitToAWS").on("click", function (e) {
-        e.preventDefault();
-        var scaleRes = $(".js-input").val();
-        if (scaleRes > 0 && scaleRes < 10) {
-            bugout.log("55,0,0,0," + scaleRes);
-            bugout.logFilename = 'log_' + pnum.val() + '_' + code.val() + '_b' + blockNum.val() + '_' + vertical + '.txt';
-            ;
-            bugout.downloadLog();
-            // uploadToAWS();
-            alert("Your response has been submitted.\nThank You!");
-            $(e.target).unbind("click")
-        } else
-            alert("Please choose a response in the range 1-9");
-    });
 
     $('#enableConsoleLog').on('click', function () {
         enableConsoleLogging = !enableConsoleLogging;
