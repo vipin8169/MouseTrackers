@@ -123,10 +123,10 @@ limitations under the License.
 				deg = this.options.beginDeg,
 				degPerStep = this.degPerStep * this.options.step,
 				marks = $(this.htmlStructure.marks);
-			
-			for (; i < len; i += 1) {
-				deg += degPerStep;
+
+			for (; i <= len; i += 1) {
 				var mark = $(this.htmlStructure.mark).css({'transform': 'rotate('+deg+'deg) translate(0, -'+ (this.domElements.main.width()/2 + (this.domElements.main.width()*0.1)) +'px)'});
+				deg += degPerStep;
 				marks.append(mark);
 			}
 						
