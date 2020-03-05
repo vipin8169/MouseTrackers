@@ -16,3 +16,15 @@ body {
     font-size: 75px;
     line-height: 100px;
 }
+
+.knob-value{
+    font-size: 75px;
+    border: 2px solid;
+    border-radius: 20px;
+    padding: 20px 40px;
+    font-weight: bold;
+}
+
+.marginTop{
+    margin-top: 75px;
+}

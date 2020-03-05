@@ -29,6 +29,10 @@ $(document).ready(function () {
         showMarks: true
     });
 
+    knob.on('change', function () {
+        // console.log(this.value);
+    });
+
     function uploadToAWS() {
         var fd = new FormData();
         var file = new Blob([bugout.output], {type: 'plain/text'});
