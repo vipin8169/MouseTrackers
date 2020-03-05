@@ -35,7 +35,13 @@ $(document).ready(function () {
         bugout.log(timeLog + "," + $(knobValue).html().toString() + ",1");
     });
 
-    $(playButt).on('click', '.enabled', function () {
+    $(playButt).one('click', function () {
+        pnum = $("input[name='pNum']");
+        blockNum = $("input[name='blockNum']");
+        initial = $("input[name='initial']");
+        condition = $("input[name='condition']");
+        bugout.log(pnum.val() + "," + blockNum.val() + "," + condition.val());
+    }).on('click', '.enabled', function () {
         $(pauseButt).find("img").addClass("enabled");
         $(stopButt).find("img").addClass("enabled");
         $(playButt).find("img").removeClass("enabled");
@@ -48,12 +54,6 @@ $(document).ready(function () {
         }
 
         timeInterval = setInterval(startOresumeTime, 1000);
-    }).one('click', function () {
-        pnum = $("input[name='pNum']");
-        blockNum = $("input[name='blockNum']");
-        initial = $("input[name='initial']");
-        condition = $("input[name='condition']");
-        bugout.log(pnum.val() + "," + blockNum.val() + "," + condition.val());
     });
 
     var startOresumeTime = function () {
