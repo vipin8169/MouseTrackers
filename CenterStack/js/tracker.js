@@ -10,9 +10,14 @@ var clock = $("#time-lapse");
 var timeLog;
 var paused = false;
 var pnum, blockNum, initial, condition;
+var playButt, pauseButt, stopButt;
 
 $(document).ready(function () {
     // document.querySelector('html').className += ("ontouchstart" in window) || window.DocumentTouch && document instanceof DocumentTouch ? ' touch' : ' no-touch';
+    playButt = $("#play");
+    pauseButt = $("#pause");
+    stopButt = $("#stop");
+
     var knob = $(".rotarySwitch").rotaryswitch({
         minimum: 1,
         maximum: 7,
@@ -30,7 +35,10 @@ $(document).ready(function () {
         bugout.log(timeLog + "," + $(knobValue).html().toString() + ",1");
     });
 
-    $("#play").on('click', function () {
+    $(playButt).on('click', '.enabled', function () {
+        $(pauseButt).find("img").addClass("enabled");
+        $(stopButt).find("img").addClass("enabled");
+        $(playButt).find("img").removeClass("enabled");
         startTime = new Date();
         if (!paused) {
             bugout.log("0,0,77");
@@ -63,15 +71,20 @@ $(document).ready(function () {
         bugout.log(timeLog + "," + $(knobValue).html().toString() + ",0");
     };
 
-    $("#pause").on('click', function () {
+    $(pauseButt).on('click', function () {
         paused = true;
+        $(pauseButt).find("img").removeClass("enabled");
+        $(playButt).find("img").addClass("enabled");
         var now = new Date();
         timeBeforePause += now - startTime;
         clearInterval(timeInterval);
         bugout.log(timeLog + "," + $(knobValue).html().toString() + ",88");
     });
 
-    $("#stop").on('click', function () {
+    $(stopButt).on('click', function () {
+        $(pauseButt).find("img").removeClass("enabled");
+        $(stopButt).find("img").removeClass("enabled");
+        $(playButt).find("img").addClass("enabled");
         clearInterval(timeInterval);
         bugout.log(timeLog + "," + $(knobValue).html().toString() + ",99");
         timeLog = 0;

@@ -16,10 +16,19 @@ form.row {
     margin: 25px auto;
 }
 
+.controls img {
+    opacity: 0.3;
+}
+
+.controls .enabled {
+    opacity: 1;
+}
+
 #time-lapse {
     font-size: 100px;
     line-height: 100px;
     font-family: digital;
+    opacity: 1;
 }
 
 #analog-button img {
