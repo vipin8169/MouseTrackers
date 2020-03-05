@@ -8,12 +8,12 @@ body {
 }
 
 form.row {
-    margin: 25px auto;
+    margin: 15px auto;
 }
 
 .controls {
     line-height: 100%;
-    margin: 25px auto;
+    margin: 15px auto;
 }
 
 .controls img {
@@ -38,7 +38,7 @@ form.row {
 #analog-button img:active {
     /*background-color: #3e8e41;*/
     /*box-shadow: 0 5px #666;*/
-    transform: translateY(5px);
+    transform: translateY(10px);
 }
 
 #knob-value {
@@ -50,11 +50,11 @@ form.row {
 }
 
 .marginTop {
-    margin-top: 75px;
+    margin-top: 50px;
 }
 
 .fixToBottom {
-    bottom: 100px;
+    bottom: 20px;
     position: absolute;
 }
 
