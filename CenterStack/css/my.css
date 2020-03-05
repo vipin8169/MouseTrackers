@@ -45,8 +45,9 @@ form.row {
     line-height: 110px;
 }
 
-#black-dot img{
- height: 60px;
+#black-dot img {
+    height: 60px;
+    margin-bottom: -120px;
 }
 
 #knob-value {
