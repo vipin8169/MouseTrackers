@@ -8,6 +8,11 @@
     background: url(theme/darkSmallBackground.png) no-repeat;
 }
 
+.rotaryswitchPlugin {
+    background-image: url(theme/darkSmallBackground@2x.png) !important;
+    background-size: 100% 100% !important;
+}
+
 @media only screen and (-moz-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
     .rotaryswitchPlugin {
         background-image: url(theme/darkSmallBackground@2x.png);
