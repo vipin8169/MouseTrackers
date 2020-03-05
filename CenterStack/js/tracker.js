@@ -17,10 +17,13 @@ var enableConsoleLogging = true;
 bugout.autoTrim = false;
 bugout.realTimeLoggingOn = enableConsoleLogging;
 var startTime;
+var resumeTime = new Date();
+var pauseTime = new Date();
 var timeInterval;
 var knobValue = $("#knob-value");
 var clock = $("#time-lapse");
 var timeLog;
+var paused = false;
 
 $(document).ready(function () {
 
@@ -44,16 +47,23 @@ $(document).ready(function () {
     });
 
     $("#play").on('click', function () {
-        startTime = new Date();
-        bugout.log("0,0,77");
-        timeLog = 0;
+        if (!paused) {
+            startTime = new Date();
+            bugout.log("0,0,77");
+            timeLog = 0;
+        } else {
+            resumeTime = new Date();
+            bugout.log(timeLog + "," + $(knobValue).html().toString() + ",89");
+        }
+
         timeInterval = setInterval(startOresumeTime, 1000);
     });
 
     var startOresumeTime = function () {
         timeLog++;
         var now = new Date();
-        var timeLapsed = new Date(now - startTime);
+        var diff = (now - startTime) + (pauseTime - resumeTime);
+        var timeLapsed = new Date(diff);
         var hours = Math.floor((timeLapsed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var timeLapseString = "";
         if (hours > 0)
@@ -65,7 +75,10 @@ $(document).ready(function () {
     };
 
     $("#pause").on('click', function () {
-
+        paused = true;
+        pauseTime = new Date();
+        clearInterval(timeInterval);
+        bugout.log(timeLog + "," + $(knobValue).html().toString() + ",88");
     });
 
     $("#stop").on('click', function () {
