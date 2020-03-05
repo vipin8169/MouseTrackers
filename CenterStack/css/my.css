@@ -41,6 +41,14 @@ form.row {
     transform: translateY(10px);
 }
 
+#black-dot {
+    line-height: 110px;
+}
+
+#black-dot img{
+ height: 60px;
+}
+
 #knob-value {
     font-size: 75px;
     border: 2px solid;

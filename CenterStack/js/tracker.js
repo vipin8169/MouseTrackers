@@ -12,12 +12,14 @@ var paused = false;
 var pnum, blockNum, initial, condition;
 var playButt, pauseButt, stopButt;
 var diffTimeLog, now;
+var blackDot;
 
 $(document).ready(function () {
     // document.querySelector('html').className += ("ontouchstart" in window) || window.DocumentTouch && document instanceof DocumentTouch ? ' touch' : ' no-touch';
     playButt = $("#play");
     pauseButt = $("#pause");
     stopButt = $("#stop");
+    blackDot = $("#black-dot img");
 
     var knob = $(".rotarySwitch").rotaryswitch({
         minimum: 1,
@@ -36,6 +38,10 @@ $(document).ready(function () {
         now = new Date();
         diffTimeLog = (now - startTime) + timeBeforePause;
         bugout.log(diffTimeLog + "," + $(knobValue).html().toString() + ",1");
+        $(blackDot).removeClass("hide");
+        setTimeout(function () {
+            $(blackDot).addClass("hide");
+        }, 200)
     });
 
     $(playButt).one('click', function () {
