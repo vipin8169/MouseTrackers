@@ -39,24 +39,30 @@ $(document).ready(function () {
         // console.log(this.value);
     });
 
+    $("#analog-button").on('click', function () {
+        bugout.log(timeLog + "," + $(knobValue).html().toString() + ",1");
+    });
+
     $("#play").on('click', function () {
         startTime = new Date();
         bugout.log("0,0,77");
         timeLog = 0;
-        timeInterval = setInterval(function () {
-            timeLog++;
-            var now = new Date();
-            var timeLapsed = new Date(now - startTime);
-            var hours = Math.floor((timeLapsed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var timeLapseString = "";
-            if (hours > 0)
-                timeLapseString = timeLapsed.toISOString().substr(11, 8);
-            else
-                timeLapseString = timeLapsed.toISOString().substr(14, 5);
-            $(clock).html(timeLapseString);
-            bugout.log(timeLog + "," + $(knobValue).html().toString() + ",0");
-        }, 1000)
+        timeInterval = setInterval(startOresumeTime, 1000);
     });
+
+    var startOresumeTime = function () {
+        timeLog++;
+        var now = new Date();
+        var timeLapsed = new Date(now - startTime);
+        var hours = Math.floor((timeLapsed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var timeLapseString = "";
+        if (hours > 0)
+            timeLapseString = timeLapsed.toISOString().substr(11, 8);
+        else
+            timeLapseString = timeLapsed.toISOString().substr(14, 5);
+        $(clock).html(timeLapseString);
+        bugout.log(timeLog + "," + $(knobValue).html().toString() + ",0");
+    };
 
     $("#pause").on('click', function () {
 

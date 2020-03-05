@@ -7,7 +7,7 @@ body {
     overscroll-behavior: contain;
 }
 
-form.row{
+form.row {
     margin: 50px auto;
 }
 
@@ -22,7 +22,7 @@ form.row{
     font-family: digital;
 }
 
-.analog-button img{
+#analog-button img {
     height: 300px;
 }
 
@@ -44,7 +44,7 @@ form.row{
     margin-top: 75px;
 }
 
-.fixToBottom{
+.fixToBottom {
     bottom: 100px;
     position: absolute;
 }
