@@ -11,6 +11,7 @@ var timeLog;
 var paused = false;
 var pnum, blockNum, initial, condition;
 var playButt, pauseButt, stopButt;
+var diffTimeLog, now;
 
 $(document).ready(function () {
     // document.querySelector('html').className += ("ontouchstart" in window) || window.DocumentTouch && document instanceof DocumentTouch ? ' touch' : ' no-touch';
@@ -32,7 +33,9 @@ $(document).ready(function () {
     });
 
     $("#analog-button").on('click', function () {
-        bugout.log(timeLog + "," + $(knobValue).html().toString() + ",1");
+        now = new Date();
+        diffTimeLog = (now - startTime) + timeBeforePause;
+        bugout.log(diffTimeLog + "," + $(knobValue).html().toString() + ",1");
     });
 
     $(playButt).one('click', function () {
@@ -50,7 +53,9 @@ $(document).ready(function () {
             bugout.log("0,0,77");
             timeLog = 0;
         } else {
-            bugout.log(timeLog + "," + $(knobValue).html().toString() + ",89");
+            now = new Date();
+            diffTimeLog = (now - startTime) + timeBeforePause;
+            bugout.log(diffTimeLog + "," + $(knobValue).html().toString() + ",89");
         }
 
         timeInterval = setInterval(startOresumeTime, 1000);
@@ -58,9 +63,9 @@ $(document).ready(function () {
 
     var startOresumeTime = function () {
         timeLog++;
-        var now = new Date();
-        var diff = (now - startTime) + timeBeforePause;
-        var timeLapsed = new Date(diff);
+        now = new Date();
+        diffTimeLog = (now - startTime) + timeBeforePause;
+        var timeLapsed = new Date(diffTimeLog);
         var hours = Math.floor((timeLapsed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var timeLapseString = "";
         if (hours > 0)
@@ -68,7 +73,7 @@ $(document).ready(function () {
         else
             timeLapseString = timeLapsed.toISOString().substr(14, 5);
         $(clock).html(timeLapseString);
-        bugout.log(timeLog + "," + $(knobValue).html().toString() + ",0");
+        bugout.log(diffTimeLog + "," + $(knobValue).html().toString() + ",0");
     };
 
     $(pauseButt).on('click', function () {
@@ -76,9 +81,11 @@ $(document).ready(function () {
         $(pauseButt).find("img").removeClass("enabled");
         $(playButt).find("img").addClass("enabled");
         var now = new Date();
-        timeBeforePause += now - startTime;
         clearInterval(timeInterval);
-        bugout.log(timeLog + "," + $(knobValue).html().toString() + ",88");
+        now = new Date();
+        diffTimeLog = (now - startTime) + timeBeforePause;
+        timeBeforePause += now - startTime;
+        bugout.log(diffTimeLog + "," + $(knobValue).html().toString() + ",88");
     });
 
     $(stopButt).on('click', function () {
@@ -86,7 +93,9 @@ $(document).ready(function () {
         $(stopButt).find("img").removeClass("enabled");
         $(playButt).find("img").addClass("enabled");
         clearInterval(timeInterval);
-        bugout.log(timeLog + "," + $(knobValue).html().toString() + ",99");
+        now = new Date();
+        diffTimeLog = (now - startTime) + timeBeforePause;
+        bugout.log(diffTimeLog + "," + $(knobValue).html().toString() + ",99");
         timeLog = 0;
         // save and download the data below
         uploadToAWS();
