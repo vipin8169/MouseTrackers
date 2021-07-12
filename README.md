@@ -1,5 +1,6 @@
 # MouseTrackers
 ## Used for moustracking studies
+These applications tracks the mouse coordinates across the screen when an individual interacts with the on-screen elements. The resulting tracking data can then be used to predict the behaviour.
 
 Links for the mouse-trackers:
  - Mouse tracker with back-tracking enabled
