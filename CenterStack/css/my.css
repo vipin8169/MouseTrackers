@@ -60,6 +60,7 @@ form.row {
 
 .marginTop {
     margin-top: 50px;
+    max-width: 100vw;
 }
 
 .fixToBottom {
